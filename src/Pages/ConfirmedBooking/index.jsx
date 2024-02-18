@@ -2,7 +2,11 @@ import './ConfirmedBooking.scss';
 
 export { Booking as default };
 
-const Booking = ({ guests, date, currentDate, time }) => {
+const Booking = (props) => props.guests && props.time
+    ? <BookingSuccess { ...props } />
+    : <BookingError />;
+
+const BookingSuccess = ({ guests, date, currentDate, time }) => {
     const guestText = guests > 1
         ? <><strong>{guests}</strong> guests</>
         : <><strong>1</strong> guest</>;
@@ -24,3 +28,10 @@ const dateFormat = {
     weekday: 'long',
     year:'numeric'
 }
+
+const BookingError = () => (
+    <main id="ConfirmedBooking">
+        <h1>Oops</h1>
+        <p>You need to make a reservation first.</p>
+    </main>
+);

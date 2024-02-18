@@ -43,6 +43,8 @@
 
 #testimonials article h2 {
     font-size: var(--heading-2);
+    text-align: center;
+    padding-inline: var(--spacing-s);
 }
 
 
@@ -71,4 +73,20 @@
     font-size: 120px;
     line-height: 0;
     translate: 0 0.6ex;
+}
+
+@media (max-width: 940px) {
+    #testimonials article {
+        grid-column: span 5;
+    }
+
+    #testimonials article:nth-of-type(odd) {
+        grid-column: 3 / span 5
+    }
+}
+
+@media (max-width: 660px) {
+    #testimonials article:nth-of-type(n) {
+        grid-column: 3 / span 10;
+    }
 }

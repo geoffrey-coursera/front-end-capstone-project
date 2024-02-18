@@ -51,7 +51,7 @@ const Special = ({ id, title, src, alt, price, description }) => (
     <article key={id}>
         <img src={src} alt={alt} />
         <div className="wrapper">
-            <h2>{title}</h2>
+            <h3>{title}</h3>
             <span className="price">{price}</span>
             <p>{description}</p>
             <OrderLink id={id} />

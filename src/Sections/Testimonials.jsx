@@ -51,7 +51,7 @@ const Testimonial = ({ id, userName, src, testimonial, rating  }) => (
     <article key={id}>
         <img src={src} alt={userName} />
         <Rating stars={rating} />
-        <h2>{userName}</h2>
+        <h3>{userName}</h3>
         <blockquote>{testimonial}</blockquote>
     </article>
 );

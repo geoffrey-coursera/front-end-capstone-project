@@ -1,4 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+
 
 import './BookingForm.scss';
 
@@ -7,9 +9,13 @@ export { BookingForm as default };
 const BookingForm = ({
     timeSlots, dispatch, fetchTimes,
     date, currentDate, setDate,
-    guests, setGuests
+    guests, setGuests,
+    submitForm
 }) => {
+    const goTo = useNavigate();
+
     const { availableSlots, selectedSlot } = timeSlots;
+    const [ok, setOk] = useState(null);
 
     const update = setter => e => setter(e.target.value);
 
@@ -17,8 +23,13 @@ const BookingForm = ({
         fetchTimes(new Date(date)).then(payload => dispatch({ type: 'times_fetched', payload }))
     }, [date]);
 
+    useEffect(() => { ok && goTo('/confirmed-booking'); }, [ok]);
+
     return (
-        <form id="booking-form">
+        <form
+            id="booking-form"
+            onSubmit={submitForm(() => setOk(true), () => setOk(false))}
+        >
             <h1>Reserve a table</h1>
             <fieldset>
                 <label htmlFor="res-date">Choose date</label>
@@ -57,7 +68,11 @@ const BookingForm = ({
                     <option>Anniversary</option>
                 </select>
             </fieldset>
-            <input type="submit" value="Make Your reservation" />
+            <input
+                type="submit"
+                value="Make Your reservation"
+            />
+            {(ok === false) && <p>Submission failed. Try again.</p>}
         </form>
     );
 };

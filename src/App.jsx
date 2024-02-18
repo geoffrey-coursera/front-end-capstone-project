@@ -1,5 +1,5 @@
 import { useReducer, useState } from 'react';
-import { getISODate } from 'availableTimes';
+import { getISODate, submitAPI } from 'availableTimes';
 
 import HeaderNav from 'Sections/HeaderNav';
 import Footer from 'Sections/Footer';
@@ -30,6 +30,11 @@ const updateTimes = (state, { type, payload }) => {
 // Jest does not support top-level await with this setup so I'm passing this 'sync' flag
 const initialTimes = initializeTimes(new Date(), true);
 
+const submitForm = (onSuccess, onError) => e => {
+    submitAPI(e.target).then(ok => ok ? onSuccess() : onError());
+    e.preventDefault();
+}
+
 const App = () => {
     const currentDate = getISODate(new Date());
 
@@ -43,7 +48,8 @@ const App = () => {
     const bookingFormProps = {
         timeSlots, dispatch, fetchTimes: fetchAPI,
         date, currentDate, setDate,
-        guests, setGuests
+        guests, setGuests,
+        submitForm
     };
 
     const confirmedBookingProps = {

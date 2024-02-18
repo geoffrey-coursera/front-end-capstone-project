@@ -54,5 +54,5 @@ const fromDate = end => memoize(date => {
 /** Return consistent random time slots */
 const getTimeSlots = fromDate(closingHour)
 
-/** Always resolve to `true` */
-const submitAPI = () => Promise.resolve(true);
+/** Resolve to `true` 2/3 of the time */
+const submitAPI = () => Promise.resolve(Math.random() < 2/3);

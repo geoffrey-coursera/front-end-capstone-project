@@ -1,0 +1,13 @@
+#booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-m);
+}
+
+#booking-form {
+    fieldset {
+        border: none;
+        display: grid;
+        gap: var(--spacing-xs);
+    }
+}

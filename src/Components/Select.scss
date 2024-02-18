@@ -136,6 +136,7 @@
         [role=combobox] {
             background: var(--color-brand-dark);
             color: var(--color-paper);
+            box-shadow: var(--shadow-heavy);
         }
 
         [role=combobox] .arrow {

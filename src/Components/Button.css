@@ -16,5 +16,5 @@
 }
 
 input.button-primary:not(:disabled) {
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-heavy);
 }

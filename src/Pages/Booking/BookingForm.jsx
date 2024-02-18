@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Select, { Option } from 'Components/Select';
 import Range from 'Components/Range';
 import DateInput from 'Components/DateInput';
-import Validate from 'Components/Validate';
+import Validate, { useValidation } from 'Components/Validate';
 
 import { ReactComponent as CalendarIcon } from 'assets/booking/calendar.svg';
 import { ReactComponent as OccasionIcon } from 'assets/booking/occasion.svg';
@@ -16,6 +16,37 @@ export { BookingForm as default };
 
 const apply = setter => e => setter(e.target.value);
 
+const timeSlotsRule = (date, availableSlots, currentDate, loading) => ({
+    label: 'no time slots',
+    predicate: () => availableSlots.length,
+    message: `Sorry, there are no more time slots available ${date === currentDate ? 'today' : 'that day'}. Try a different day.`,
+    isLoading: loading,
+    loadingMessage: 'Checking availability...',
+    type: 'info'
+});
+
+const validDateRule = {
+    label: 'not valid date',
+    predicate: apply(Date.parse),
+    message: 'You must enter a valid date.',
+    type: 'error'
+};
+
+const futureDateRule = (currentDate) => ({
+    label: 'not future date',
+    predicate: apply(date => Date.parse(date) >= Date.parse(currentDate) ),
+    message: "You can't select a date which has already passed.",
+    overriddenBy: ['not valid date'],
+    type: 'error'
+});
+
+const guestsRule = {
+    label: 'too few guests',
+    predicate: apply(Number),
+    message: 'You need to specify a number of guests.',
+    type: 'error'
+};
+
 const BookingForm = ({
     timeSlots, dispatch, fetchTimes,
     date, currentDate, setDate,
@@ -27,12 +58,7 @@ const BookingForm = ({
 
     const { availableSlots, selectedSlot } = timeSlots;
     const [ok, setOk] = useState(null);
-    const [errors, setErrors] = useState({
-        'res-time': { error: false, touched: false },
-        'guests': { error: false, touched: false }
-    });
-
-    const setError = name => state => setErrors(errors => ({...errors, [name]: state }));
+    const [errors, report] = useValidation(['res-date','res-time','guests']);
 
     useEffect(() => {
         if(mounted.current) {
@@ -50,20 +76,24 @@ const BookingForm = ({
             onSubmit={onSubmit(() => goTo('/confirmed-booking'), () => setOk(false))}
         >
             <h1>Reserve a table</h1>
-            <DateInput
-                id="res-date"
-                value={date}
-                onChange={apply(setDate)}
-                icon={<CalendarIcon />}
-                min={currentDate}
+            <Validate
+                onError={report('res-date')}
+                onChange={[validDateRule, futureDateRule(currentDate)]}
+                onRender={timeSlotsRule(date, availableSlots, currentDate, loading)}
             >
-                Choose a date
-            </DateInput>
-            <Validate onError={setError('res-time')} onRender={() => availableSlots.length ? [] : [
-                `Sorry, there are no more time slots available ${date === currentDate ? 'today' : 'that day'}. Try a different day.`
-            ]}>
+                <DateInput
+                    id="res-date"
+                    value={date}
+                    onChange={apply(payload => dispatch({ type: 'date_selected', payload }))}
+                    icon={<CalendarIcon />}
+                    min={currentDate}
+                >
+                    Choose a date
+                </DateInput>
+            </Validate>
+            <Validate onError={report('res-time')}>
                 <Select
-                    disabled={!availableSlots.length}
+                    disabled={!availableSlots.length || loading}
                     icon={<TimeIcon />}
                     id="res-time"
                     name="res-time"
@@ -78,9 +108,7 @@ const BookingForm = ({
                 because I want to make sure the user selects a number of guests
                 and does not submit `1` by mistake, hence the `minValid` attr.
             */}
-            <Validate onError={setError('guests')} onChange={apply(x => Number(x) ? [] : [
-                'You need to specify a number of guests'
-            ])}>
+            <Validate onError={report('guests')} onChange={guestsRule}>
                 <Range
                     type="range"
                     renderIcon={(className) => <GuestsIcon {...{className}} />}

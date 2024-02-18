@@ -33,6 +33,13 @@ const validDateRule = {
     type: 'error'
 };
 
+const nonEmptyRule = {
+    label: 'is empty',
+    predicate: (value, touched) => value || !touched,
+    message: 'You must choose a time slot.',
+    type: 'error'
+}
+
 const futureDateRule = (currentDate) => ({
     label: 'not future date',
     predicate: apply(date => Date.parse(date) >= Date.parse(currentDate) ),
@@ -113,7 +120,7 @@ const BookingForm = ({
                     Choose a date
                 </DateInput>
             </Validate>
-            <Validate onError={report('res-time')}>
+            <Validate onRender={nonEmptyRule} onError={report('res-time')}>
                 <Select
                     disabled={!availableSlots.length || delayedLoading}
                     icon={<TimeIcon />}

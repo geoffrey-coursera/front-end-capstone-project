@@ -1,5 +1,4 @@
 #specials {
-    row-gap: var(--spacing-l);
     grid-template-rows: auto 200px repeat(3, auto);
 }
 
@@ -7,6 +6,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: var(--spacing-l);
 }
 
 #specials article {
@@ -16,24 +16,24 @@
     display: grid;
     grid-template-rows: subgrid;
     grid-template-columns: 1fr auto;
-    gap: var(--spacing-m);
-    padding-bottom: var(--spacing-m);
     border-top-right-radius: var(--border-radius);
     border-top-left-radius: var(--border-radius);
     overflow: hidden;
 }
 
+#specials article .wrapper {
+    display: grid;
+    grid-row: 2/-1;
+    grid-column: 1/-1;
+    grid-template-columns: subgrid;
+    grid-template-rows: subgrid;
+    padding: var(--spacing-m);
+    row-gap: var(--spacing-m);
+}
+
 #specials article h2 {
     font-size: var(--heading-2);
     align-self: center;
-}
-
-#specials article > :not(img, .price) {
-    margin-left: var(--spacing-m);
-}
-
-#specials article > :not(img, h2) {
-    margin-right: var(--spacing-m);
 }
 
 #specials article :where(img, p, a){

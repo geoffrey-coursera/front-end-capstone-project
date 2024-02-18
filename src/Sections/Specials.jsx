@@ -50,10 +50,12 @@ const Specials = () => (
 const Special = ({ id, title, src, alt, price, description }) => (
     <article key={id}>
         <img src={src} alt={alt} />
-        <h2>{title}</h2>
-        <span className="price">{price}</span>
-        <p>{description}</p>
-        <OrderLink id={id} />
+        <div className="wrapper">
+            <h2>{title}</h2>
+            <span className="price">{price}</span>
+            <p>{description}</p>
+            <OrderLink id={id} />
+        </div>
     </article>
 )
 

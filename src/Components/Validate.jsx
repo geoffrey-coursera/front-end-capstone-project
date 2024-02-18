@@ -1,4 +1,4 @@
-import { cloneElement, Children, useState, useEffect } from 'react';
+import { cloneElement, Children, useState, useEffect, useRef } from 'react';
 import ValidationError from './ValidationError';
 
 export { Validate as default, useValidation };
@@ -14,10 +14,10 @@ const applyRule = ({
     loadingMessage,
     overriddenBy,
     type='error'
-}, e) => {
+}, ...args) => {
     const m =
         isLoading ? loadingMessage
-        : !predicate(e) ? message
+        : !predicate(...args) ? message
         : null;
 
     const t =
@@ -28,10 +28,10 @@ const applyRule = ({
     return {[label]: { type: t, message: m, overriddenBy }};
 };
 
-const applyRules = (rules, e) => 
-    !Array.isArray(rules) ? applyRule(rules, e)
+const applyRules = (rules, ...args) => 
+    !Array.isArray(rules) ? applyRule(rules, ...args)
     : rules.reduce(
-        (a, b) => ({...a, ...applyRule(b, e)}),
+        (a, b) => ({...a, ...applyRule(b, ...args)}),
         {}
     );
 
@@ -84,7 +84,8 @@ const Validate = ({
 
     const ruleSet = extractKeys([onRender, onChange]);
 
-    const renderErrors = applyRules(onRender);
+    const values = Children.map(children, ({ props }) => props.value);
+    const renderErrors = applyRules(onRender, ...values, touched);
     const hashedRenderErrors = hash(renderErrors);
     
     useEffect(() => {
@@ -99,7 +100,7 @@ const Validate = ({
             onChange: e => {
                 setTouched(true);
                 if(onChange) {
-                    const newErrors = applyRules(onChange, e);
+                    const newErrors = applyRules(onChange, e, touched);
                     setErrors(override(newErrors));
                     onError({ touched: true, error: hasErrors(newErrors) })
                 } else {

@@ -1,13 +1,13 @@
 import { useState, Children, cloneElement, useEffect, useRef } from 'react';
-import Icon from './Icon';
+import { addClassName } from 'lib/jsx';
 
 import './Select.scss';
 
 export { Select as default, Option };
 
-
 const Select = (props) => {
     const { id, icon, title, name, children, defaultOption } = props;
+
     const isControlled = props.value !== undefined;
     const hasDefaultValue = props.defaultValue !== undefined;
     const defaultValue = hasDefaultValue ? props.defaultValue : '';
@@ -96,7 +96,7 @@ const Select = (props) => {
                     }
                 }}
             >
-                { Boolean(icon) && <Icon src={icon} w="40" h="40" /> }
+                { icon && addClassName(icon, 'icon') }
                 <label id={id + '-label'}>
                     {value || title}
                 </label>
@@ -154,7 +154,7 @@ const Option = ({ children, selected, close, onChange, parent }) => {
 }
 
 const Arrow = () => (
-    <svg viewBox="0 0 10 10">
+    <svg className="arrow" viewBox="0 0 10 10">
         <polygon points="10,10 0,10 0,7.5 7.5,7.5 7.5,0 10,0 "/>
     </svg>
 )

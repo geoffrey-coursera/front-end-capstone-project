@@ -45,7 +45,7 @@
         transition-duration: var(--duration-f)
     }
 
-    [role=combobox] svg {
+    [role=combobox] .arrow {
         content: "";
         display: block;
         height: 20px;
@@ -105,7 +105,7 @@
         background-color: var(--color-paper);
     }
 
-    [aria-expanded=true] svg {
+    [aria-expanded=true] .arrow {
         rotate: 225deg;
         translate: 10px 5px;
     }
@@ -120,12 +120,12 @@
             color: var(--color-paper);
         }
 
-        [role=combobox] img {
-            visibility: hidden;
+        [role=combobox] .arrow {
+            fill: var(--color-paper);
         }
 
-        [role=combobox] svg * {
-            fill: var(--color-paper);
+        [role=combobox] .icon * {
+            stroke: var(--color-paper);
         }
     }
 }

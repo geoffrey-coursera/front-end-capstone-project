@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Select, { Option } from 'Components/Select';
 
-import OccasionIcon from 'assets/booking/occasion.svg';
-import TimeIcon from 'assets/booking/time.svg';
+import { ReactComponent as OccasionIcon } from 'assets/booking/occasion.svg';
+import { ReactComponent as TimeIcon } from 'assets/booking/time.svg';
 import './BookingForm.scss';
 
 export { BookingForm as default };
@@ -61,7 +61,7 @@ const BookingForm = ({
                 />
             </fieldset>
             <Select
-                icon={OccasionIcon}
+                icon={<OccasionIcon />}
                 id="occasion"
                 name="occasion"
                 title="Occasion"
@@ -84,7 +84,7 @@ const BookingSlots = ({ id, selectedSlot, onChange, availableSlots, isToday }) =
     availableSlots.length
     ? (
         <Select
-            icon={TimeIcon}
+            icon={<TimeIcon />}
             id={id}
             name={id}
             title="Choose a time"

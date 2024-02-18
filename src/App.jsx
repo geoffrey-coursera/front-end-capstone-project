@@ -15,10 +15,30 @@ import './App.scss';
 
 export { App as default, updateTimes };
 
-const updateTimes = (state, { type, payload }) => {
+const updateTimes = currentDate => (state, { type, payload }) => {
     switch(type) {
-        case 'times_fetched': return { availableSlots: payload, selectedSlot: '' };
-        case 'time_selected': return {...state, selectedSlot: payload };
+        case 'times_fetched': return {
+            ...state,
+            availableSlots: payload,
+            selectedSlot: '',
+            loading: false
+        };
+        case 'time_selected': return {
+            ...state,
+            selectedSlot: payload
+        };
+        case 'date_selected': {
+            const date = Date.parse(payload);
+            const isValid = Boolean(date);
+            const isInTheFuture = date >= Date.parse(currentDate)
+            const ok = isValid && isInTheFuture;
+            return {
+                ...state,
+                date: ok ? new Date(payload) : state.date,
+                selectedSlot: '',
+                loading: ok
+            };
+        }
         default: return state
     }
 };
@@ -38,23 +58,27 @@ const App = () => {
     const now = dateNow();
     const currentDate = getISODate(now);
 
-    const [date, setDate] = useState(currentDate);
     const [guests, setGuests] = useState(0);
-    const [timeSlots, dispatch] = useReducer(updateTimes, {
+    const [timeSlots, dispatch] = useReducer(updateTimes(currentDate), {
         availableSlots: [],
-        selectedSlot: ''
+        selectedSlot: '',
+        date: now,
+        loading: true
     });
 
+    const getTimeSlots = date => fetchTimes(date).then(
+        payload => dispatch({ type: 'times_fetched', payload })
+    );
+
     const bookingFormProps = {
-        timeSlots, dispatch, fetchTimes,
-        date, currentDate, setDate,
+        timeSlots, getTimeSlots, dispatch, getISODate, currentDate,
         guests, setGuests,
         onSubmit: submitForm(submitReservation)
     };
 
     const confirmedBookingProps = {
         time: timeSlots.selectedSlot,
-        date, currentDate,
+        date: timeSlots.date, currentDate,
         guests
     };
 

@@ -48,27 +48,19 @@ const guestsRule = {
 };
 
 const BookingForm = ({
-    timeSlots, dispatch, fetchTimes,
-    date, currentDate, setDate,
+    timeSlots, getTimeSlots, dispatch, getISODate, currentDate,
     guests, setGuests,
     onSubmit
 }) => {
     const goTo = useNavigate();
     const mounted = useRef(false);
 
-    const { availableSlots, selectedSlot } = timeSlots;
+    const { availableSlots, selectedSlot, date: dateTime, loading } = timeSlots;
+    const date = getISODate(dateTime);
     const [ok, setOk] = useState(null);
     const [errors, report] = useValidation(['res-date','res-time','guests']);
 
-    useEffect(() => {
-        if(mounted.current) {
-            fetchTimes(new Date(date)).then(
-                payload => dispatch({ type: 'times_fetched', payload })
-            )
-        } else {
-            mounted.current = true;
-        }
-    }, [date]);
+    useEffect(() => { getTimeSlots(dateTime) }, [date]);
 
     return (
         <form

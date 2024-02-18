@@ -14,7 +14,7 @@ const Hero = () => (
                 <h2>Chicago</h2>
             </header>
             <Emphasis>We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.</Emphasis>
-            <Button href="/reservation">Reserve a table</Button>
+            <Button href="/booking">Reserve a table</Button>
         </div>
         <img src={StartersPlate} alt="a plate of starters" />
     </article>

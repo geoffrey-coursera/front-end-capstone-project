@@ -19,7 +19,7 @@ const pageTitles = [
     'Home',
     'About',
     'Menu',
-    'Reservations',
+    'Booking',
     'Order Online',
     'Login',
 ];

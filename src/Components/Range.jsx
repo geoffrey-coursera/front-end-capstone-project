@@ -42,7 +42,7 @@ const Range = ({ defaultValue, renderIcon, title, id, min, max, minValid=min, ..
             />
             <datalist id={id + '-range-list'}>
                 {Array.from({ length: max + 1 - min }, (_, i) =>
-                    <option className={optionClass(i)} key={i + min} value={i + min} label={i + min} />
+                    <option onClick={onChange} className={optionClass(i)} key={i + min} value={i + min} label={i + min} />
                 )}
             </datalist>
         </div>

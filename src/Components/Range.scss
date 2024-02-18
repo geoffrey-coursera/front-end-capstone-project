@@ -46,19 +46,22 @@
         -webkit-appearance: none;
         appearance: none;
         cursor: pointer;
+        position: relative;
+        z-index: 2;
     }
 
-
     datalist {
-        width: calc(100% + var(--m));
         display: flex;
         justify-content: space-between;
-        margin-inline: calc(-0.5 * var(--m));
-        --m: 5px;
+        margin-inline: calc(-0.5 * var(--m) - 2 * var(--th));
+        --m: calc(var(--thumb-size) / 2);
+        --th: 0.1ch;
     }
 
     option {
         width: 2ch;
+        flex-grow: 1;
+        cursor: pointer;
         display: flex;
         justify-content: center;
         position: relative;
@@ -71,24 +74,28 @@
     }
 
     option::after {
-        content: '';
+        content: '|';
         position: absolute;
-        left: 50%;
-        top: -5px;
-        height: 5px;
-        width: 0;
-        border: 1px solid var(--color-secondary-light);
-        z-index: -1;
+        text-align: center;
+        display: block;
+        width: 100%;
+        left: 0;
+        top: -18px;
+        color: var(--color-secondary-light);
+        border: none;
     }
 
     &:hover option::after, &:active option::after {
-        color: var(--color-shade-4);
-        border: 1px solid var(--color-shade-1);
+        color: var(--color-shade-1);
 
     }
 
     option.selected:not(.invalid) {
-        color: var(--color-brand-dark)
+        color: var(--color-brand-dark);
+    }
+
+    option:not(.invalid):hover {
+        color: var(--color-shade-6);
     }
 
     @mixin thumb {

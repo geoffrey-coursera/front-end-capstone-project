@@ -1,35 +1,104 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import BookingForm, * as rule from './BookingForm';
-import { updateTimes } from 'App';
+import App, { updateTimes } from 'App';
 import { isTimeSlot } from 'availableTimes.test'
 import { fetchTimes, getISODate } from 'availableTimes'
-import { dependencies } from 'fixtures'
+import { Fixture, dependencies } from 'fixtures'
+
+const base = {
+    timeSlots: {
+        availableSlots: [],
+        selectedSlot: '',
+        date: new Date()
+    },
+    getTimeSlots: () => Promise.resolve([]),
+    dispatchers: {
+        date_selected: () => {},
+        time_selected: () => {},
+    },
+    currentDate: '',
+    onSubmit: () => {},
+    onSuccess: () => {},
+    guests: 0,
+    setGuests: () => {},
+    getISODate: () => ''
+};
 
 test('Renders the BookingForm heading', () => {
-    const props = {
-        timeSlots: {
-            availableSlots: [],
-            selectedSlot: '',
-            date: new Date()
-        },
-        getTimeSlots: () => Promise.resolve([]),
-        dispatchers: {
-            date_selected: () => {},
-            time_selected: () => {},
-        },
-        currentDate: '',
-        onSubmit: () => {},
-        onSuccess: () => {},
-        guests: 0,
-        setGuests: () => {},
-        getISODate: () => ''
-    };
+    const props = base;
 
     render(<BookingForm {...props} />);
     const headingElement = screen.getByText("Reserve a table");
 
     expect(headingElement).toBeInTheDocument();
 })
+
+test('Render form submission pending message while submitting', () => {
+    const props = base;
+
+    const { getByText, container } = render(<BookingForm {...props} />);
+    fireEvent.submit(container.querySelector('form'));
+
+    const message = getByText("Sending reservation...");
+
+    expect(message).toBeInTheDocument();
+})
+
+test('Render form submission error message on error', async () => {
+    const props = {...base, onSubmit: (onSuccess, onError) => e => {
+        onError(); e.preventDefault();
+    }};
+
+    const F = Fixture();
+
+    const { findByText, container } = render(<F><BookingForm {...props} /></F>);
+
+    fireEvent.submit(container.querySelector('form'));
+
+    await waitFor(async () => {
+        const message = await findByText("Submission failed. Try again.")
+        expect(message).toBeInTheDocument();
+    })
+})
+
+test('Getting to the confirmation page before submitting yields an error', () => {
+    const F = Fixture(x => x, ['/confirmed-booking']);
+
+    const { getByText } = render(<F><App /></F>);
+
+    const message = getByText("You need to make a reservation first.")
+    expect(message).toBeInTheDocument();
+})
+
+test('Render confirmation page when submission succeeds', async () => {
+    const F = Fixture(x => x, ['/booking']);
+
+    const date = '2000-01-30';
+    const enDate = 'Sunday, 30 January 2000';
+    const time = '17:00';
+    const guests = 3;
+
+    const { findByText, container } = render(<F><App /></F>);
+
+    const form = container.querySelector('form');
+    
+    const dateInput = container.querySelector('[name=res-date]');
+    fireEvent.change(dateInput, { target: { value: date } });
+
+    fireEvent.click(await findByText('Choose a time'));
+    fireEvent.click(await findByText(time));
+
+    const guestsInput = container.querySelector('[name=res-guests]');
+    fireEvent.change(guestsInput, { target: { value: guests } });
+
+    fireEvent.submit(form);
+    
+    await waitFor(async () => {
+        const message = container.querySelector('main').textContent;
+        expect(message).toMatch(`Your reservation for ${guests} guests, ${enDate} at ${time} was confirmed.`)
+    })
+})
+
 
 describe('time slots state', () => {
     test('fetchTimes fetches time slots', async () => {

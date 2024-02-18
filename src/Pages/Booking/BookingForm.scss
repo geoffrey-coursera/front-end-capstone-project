@@ -3,6 +3,7 @@
     flex-direction: column;
     gap: var(--spacing-m);
     max-width: 380px;
+    width: 100%;
 }
 
 #booking-form {
@@ -21,7 +22,15 @@
         font-family: var(--font-content);
         font-size: 1.1rem;
         font-weight: bold;
-        padding: var(--spacing-s) var(--spacing-xs)
+        padding: var(--spacing-s) var(--spacing-xs);
+        border-radius: calc(var(--border-radius) / 1.5);
+        border: var(--border-width) solid var(--color-secondary-light);
+    }
+    
+    *:has(input[type=date]):has(label:hover) input[type=date],
+    input[type=date]:hover {
+        border-color: var(--color-shade-1);
+
     }
 
     input[type=submit] {

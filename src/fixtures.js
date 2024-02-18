@@ -1,7 +1,7 @@
 import { Dependencies } from './dependencies';
 import { MemoryRouter } from 'react-router-dom';
 
-export { DefaultFixture as default, dependencies };
+export { DefaultFixture as default, Fixture, dependencies };
 
 const dependencies = {
     dateNow: () => new Date(2000, 0, 1, 12),
@@ -12,14 +12,12 @@ const dependencies = {
     }
 };
 
-const id = x => x;
-
-const Fixture = override => ({ children }) => (
-    <MemoryRouter>
+const Fixture = (override = x => x, initialEntries = ['/']) => ({ children }) => (
+    <MemoryRouter initialEntries={initialEntries}>
         <Dependencies value={override(dependencies)}>
             {children}
         </Dependencies>
     </MemoryRouter>
 );
 
-const DefaultFixture = Fixture(id);
+const DefaultFixture = Fixture();

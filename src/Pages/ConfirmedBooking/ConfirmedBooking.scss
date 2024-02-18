@@ -1,0 +1,9 @@
+#ConfirmedBooking {
+    display:grid;
+    grid-column: start / end;
+    margin-inline: auto;
+    margin-block: var(--spacing-l) var(--spacing-xl);
+    align-content: center;
+    text-align: center;
+    gap: var(--spacing-s)
+}

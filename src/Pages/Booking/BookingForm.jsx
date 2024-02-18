@@ -1,16 +1,15 @@
-import { useEffect, useState } from 'react';
-import { getISODate } from 'availableTimes';
+import { useEffect } from 'react';
 
 import './BookingForm.scss';
 
 export { BookingForm as default };
 
-const BookingForm = ({ timeSlots, dispatch, fetchTimes }) => {
-    const currentDate = getISODate(new Date());
-    
-    const [date, setDate] = useState(currentDate);
+const BookingForm = ({
+    timeSlots, dispatch, fetchTimes,
+    date, currentDate, setDate,
+    guests, setGuests
+}) => {
     const { availableSlots, selectedSlot } = timeSlots;
-    const [guests, setGuests] = useState(2);
 
     const update = setter => e => setter(e.target.value);
 

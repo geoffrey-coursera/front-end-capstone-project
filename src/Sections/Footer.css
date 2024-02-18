@@ -1,0 +1,38 @@
+footer {
+    color: var(--color-paper);
+    background: var(--color-brand-dark);
+    padding-block: var(--spacing-l);
+}
+
+footer ul {
+    list-style: none;
+    display: grid;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-s);
+}
+
+.social-media {
+    grid-auto-flow: column;
+    justify-content: start;
+}
+
+footer a, footer path {
+    color: var(--color-paper);
+    fill: var(--color-paper);
+}
+
+footer > img {
+    grid-column: start / span 2;
+}
+
+footer > div {
+    grid-column: 4 / end;
+    display: grid;
+    grid-auto-flow: column;
+    gap: var(--spacing-m);
+    justify-items: center;
+}
+
+footer h2 {
+    font-size: var(--heading-3);
+}

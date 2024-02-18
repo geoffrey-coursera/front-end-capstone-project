@@ -1,0 +1,26 @@
+#header-nav {
+    grid-row: 1 / 2;
+    display: flex;
+    gap: var(--spacing-l);
+    align-items: center;
+    margin-block: var(--spacing-s);
+}
+
+#header-nav nav {
+    display: contents;
+}
+
+#header-nav ul {
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+    width: 100%;
+    margin-inline: var(--spacing-m);
+}
+
+#header-nav a {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--color-content);
+    font-size: 1.2rem;
+}

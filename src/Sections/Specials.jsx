@@ -2,6 +2,11 @@ import React from 'react-dom';
 import GreekSalad from '../assets/specials/greek-salad.jpg';
 import Bruschetta from '../assets/specials/bruschetta.jpg';
 import LemonDessert from '../assets/specials/lemon-dessert.jpg';
+import Delivery from '../assets/specials/delivery.png';
+import Button from '../Components/Button';
+import Link from '../Components/Link';
+
+import './Specials.css';
 
 export { Specials as default };
 
@@ -34,8 +39,10 @@ const specials = [
 
 const Specials = () => (
     <>
-        <h2>This weeks specials!</h2>
-        <a className="order-button" href="/order-online">Online Menu</a>
+        <div className="wrapper">
+            <h2>This weeks specials!</h2>
+            <Button href="/order-online">Online Menu</Button>
+        </div>
         {specials.map(Special)}
     </>
 );
@@ -46,8 +53,12 @@ const Special = ({ id, title, src, alt, price, description }) => (
         <h2>{title}</h2>
         <span className="price">{price}</span>
         <p>{description}</p>
-        <a className="order-link" href={`/order-online?id=${id}`}>
-            Order a delivery
-        </a>
+        <OrderLink id={id} />
     </article>
+)
+
+const OrderLink = ({ id }) => (
+    <Link href={`/order-online?id=${id}`} after={Delivery}>
+        Order a delivery
+    </Link>
 )

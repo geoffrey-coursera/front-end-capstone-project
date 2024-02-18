@@ -1,0 +1,6 @@
+.link {
+    display: flex;
+    gap: var(--spacing-xs);
+    font-weight: bold;
+    text-decoration: none;
+}

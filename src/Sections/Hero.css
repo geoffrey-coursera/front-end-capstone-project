@@ -1,0 +1,56 @@
+#hero {
+    color: white;
+    grid-template-rows: auto auto;
+    position: relative;
+}
+
+#hero::before {
+    content: '';
+    z-index: -1;
+    grid-column: var(--span-all);
+    grid-row: 1/2;
+    position: absolute;
+    inset: 0;
+    background: var(--color-brand-dark);
+}
+
+#hero article {
+    display: contents;
+}
+
+#hero .wrapper {
+    margin-block: var(--spacing-m);
+    grid-column: start / mid;
+    display: grid;
+    gap: var(--spacing-m);
+    justify-items: start;
+}
+
+#hero::after {
+    content: '';
+    display: block;
+    height: calc(2 * var(--spacing-m));
+    grid-row: 2/3;
+}
+
+#hero img {
+    position: absolute;
+    top: var(--spacing-m);
+    left: 0px;
+    height: calc(100% - var(--spacing-m));
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    grid-column: mid / end;
+    grid-row: var(--span-all);
+    border-radius: 16px;
+}
+
+#hero h1 {
+    color: var(--color-brand-accent);
+    white-space: nowrap;
+}
+
+#hero h2 {
+    font-size: var(--sub-heading);
+}

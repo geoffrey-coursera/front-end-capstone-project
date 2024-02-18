@@ -1,0 +1,74 @@
+#testimonials {
+    grid-template-rows: repeat(4, auto);
+}
+
+#testimonials article {
+    grid-column: span 3;
+    grid-row: span 4;
+    display: grid;
+    grid-template-rows: subgrid;
+    margin-top: var(--spacing-xl);
+    padding-bottom: var(--spacing-s);
+    justify-items: center;
+    border: var(--border-width) solid var(--color-secondary-light);
+    border-radius: 16px;
+}
+
+#testimonials article:first-of-type {
+    grid-column: start / span 3;
+}
+
+#testimonials img {
+    display: block;
+    margin-top: calc(-1 * var(--spacing-l));
+    height: var(--_w);
+    border-radius: var(--_w);
+
+    --_w: 120px;
+}
+
+#testimonials > h2 {
+    font-size: var(--heading-1);
+    margin: auto;
+    display: inline-flex;
+    align-items: center;
+}
+
+#testimonials > h2::before, #testimonials > h2::after {
+    content: '';
+    width: var(--spacing-l);
+    border-bottom: var(--border-width) solid var(--color-secondary-light);
+    margin-inline: var(--spacing-s);
+}
+
+#testimonials article h2 {
+    font-size: var(--heading-2);
+}
+
+
+#testimonials .rating {
+    color: var(--color-brand-accent);
+    font-size: 30px;
+    line-height: var(--spacing-l);
+}
+
+#testimonials blockquote {
+    position: relative;
+    z-index: 0;
+    margin: var(--spacing-s);
+    padding-left: var(--spacing-s);
+    padding-top: var(--spacing-s);
+    text-wrap: balance;
+}
+
+#testimonials blockquote::before {
+    content: '“';
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    color: var(--color-secondary-light);
+    font-size: 120px;
+    line-height: 0;
+    translate: 0 0.6ex;
+}

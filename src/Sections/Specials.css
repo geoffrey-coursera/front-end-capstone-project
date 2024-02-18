@@ -1,0 +1,64 @@
+#specials {
+    row-gap: var(--spacing-l);
+    grid-template-rows: auto 200px repeat(3, auto);
+}
+
+#specials > .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#specials article {
+    grid-column: span 4;
+    grid-row: 2 / -1;
+    background: var(--color-secondary-light);
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-template-columns: 1fr auto;
+    gap: var(--spacing-m);
+    padding-bottom: var(--spacing-m);
+    border-top-right-radius: 16px;
+    border-top-left-radius: 16px;
+    overflow: hidden;
+}
+
+#specials article h2 {
+    font-size: var(--heading-2);
+    align-self: center;
+}
+
+#specials article > :not(img, .price) {
+    margin-left: var(--spacing-m);
+}
+
+#specials article > :not(img, h2) {
+    margin-right: var(--spacing-m);
+}
+
+#specials article :where(img, p, a){
+    grid-column: span 2;
+}
+
+#specials .price {
+    justify-self: flex-end;
+    align-self: center;
+    font-weight: bold;
+    color: var(--color-secondary-accent);
+    font-size: 1.1em;
+}
+
+#specials article:first-of-type {
+    grid-column: start / span 4;
+}
+
+#specials article > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#specials .order-link {
+    justify-self: start;
+}

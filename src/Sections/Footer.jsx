@@ -1,37 +1,40 @@
 import React from 'react-dom';
-import Nav from './Nav';
-import Logo from '../assets/logo-vertical.png';
+import Nav from '../Components/Nav';
+import LogoFooter from '../assets/logo-vertical-white.png';
+
+import './Footer.css';
 
 export { Footer as default };
 
 const Footer = () => (
     <footer>
         <img
-            id="logo"
             height="160"
-            src={Logo}
+            src={LogoFooter}
             alt="Little Lemon Restaurant"
         />
-        <section>
-            <h2>Doormat Navigation</h2>
-            <Nav />
-        </section>
-        <section>
-            <h2>Contact</h2>
-            <ul>
-                <li>932 W Fulton Market, Chicago, IL 60607-1323</li>
-                <li>+1 892-250-3721</li>
-                <li><a href="mailto:contact@littlelemon.com">contact@littlelemon.com</a></li>
-            </ul>
-        </section>
-        <section>
-            <h2>Social media links</h2>
-            <ul>
-                <li>{instagramIcon}</li>
-                <li>{facebookIcon}</li>
-                <li>{twitterIcon}</li>
-            </ul>
-        </section>
+        <div>
+            <section>
+                <h2>Navigation</h2>
+                <Nav />
+            </section>
+            <section>
+                <h2>Contact</h2>
+                <ul>
+                    <li>932 W Fulton Market, Chicago,<br />IL 60607-1323</li>
+                    <li>+1 892-250-3721</li>
+                    <li><a href="mailto:contact@littlelemon.com">contact@littlelemon.com</a></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Social media</h2>
+                <ul className="social-media">
+                    <li>{instagramIcon}</li>
+                    <li>{facebookIcon}</li>
+                    <li>{twitterIcon}</li>
+                </ul>
+            </section>
+        </div>
     </footer>
 );
 

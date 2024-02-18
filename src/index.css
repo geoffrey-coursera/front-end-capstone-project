@@ -1,0 +1,56 @@
+/* variables */
+
+:root {
+    --color-paper: white;
+    --color-content: #333333;
+    --color-brand-dark: #495E57;
+    --color-brand-accent: #F4CE14;
+    --color-secondary-light: #EDEFEE;
+    --color-secondary-accent: #EE9972;
+
+    --spacing-xs: 10px;
+    --spacing-s: 15px;
+    --spacing-m: 30px;
+    --spacing-l: 50px;
+    --spacing-xl: 90px;
+
+    --border-width: 3.5px;
+
+    --span-all: -1/1;
+
+    --heading-1: 4rem;
+    --sub-heading: 2.5em;
+    --heading-2: 1.8rem;
+    --heading-3: 1.5rem;
+}
+
+/* reset */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Typography */
+
+body, a {
+    color: var(--color-content);
+    font-family: 'Karla', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Markazi Text', serif;
+    line-height: 0.8em;
+}
+
+h1, h2 {
+    font-size: var(--heading-1);
+}
+
+h3, h4, h5, h6 {
+    font-size: var(--heading-2);
+}
+
+p {
+    line-height: 1.5em;
+}

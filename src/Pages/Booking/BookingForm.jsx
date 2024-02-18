@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Select, { Option } from 'Components/Select';
+import Range from 'Components/Range';
 
 import { ReactComponent as OccasionIcon } from 'assets/booking/occasion.svg';
 import { ReactComponent as TimeIcon } from 'assets/booking/time.svg';
+import { ReactComponent as GuestsIcon } from 'assets/booking/guests.svg';
+
 import './BookingForm.scss';
 
 export { BookingForm as default };
@@ -50,16 +53,19 @@ const BookingForm = ({
                 availableSlots={availableSlots}
                 isToday={date === currentDate}
             />
-            <fieldset>
-                <label htmlFor="guests">Number of guests</label>
-                <input
-                    id="guests"
-                    type="number"
-                    value={guests}
-                    min="1" max="10"
-                    onChange={update(setGuests)}
-                />
-            </fieldset>
+            {/* I'm not implementing HTML5 validation on the min number of guests 
+                because I want to make sure the user selects a number of guests
+                and does not submit `1` by mistake, hence the `minValid` attr.
+            */}
+            <Range
+                type="range"
+                renderIcon={(className) => <GuestsIcon {...{className}} />}
+                title="Number of guests"
+                id="guests"
+                value={guests}
+                min={0} minValid={1} max={10}
+                onChange={update(setGuests)}
+            />
             <Select
                 icon={<OccasionIcon />}
                 id="occasion"

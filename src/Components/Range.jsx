@@ -1,0 +1,50 @@
+import { useState } from 'react';
+
+import './Range.scss';
+
+export { Range as default };
+
+
+const Range = ({ defaultValue, renderIcon, title, id, min, max, minValid=min, ...props }) => {
+    const isControlled = props.value !== undefined;
+    const hasDefaultValue = defaultValue !== undefined;
+    
+    const [internalValue, setValue] = useState(hasDefaultValue ? defaultValue : '');
+    const value = Number(isControlled ? props.value : internalValue);
+    const progress = (value - min) / (max - min);
+
+    const onChange = e => {
+        if (props.onChange) props.onChange(e);
+        setValue(value);
+    };
+
+    const optionClass = i => {
+        const selected = value === i ? ['selected'] : [];
+        const invalid = i < minValid ? ['invalid'] : [];
+        return [...selected, ...invalid].join(' ');
+    }
+
+    return (
+        <div className="custom-range" style={{ '--progress': progress }}>
+            <div>
+                {Boolean(renderIcon) && renderIcon('icon')}
+                <label htmlFor={id}>{title}</label>
+            </div>
+            <input
+                type="range"
+                id={id}
+                list={id + '-range-list'}
+                min={min}
+                max={max}
+                {...props}
+                onChange={onChange}
+                value={value}
+            />
+            <datalist id={id + '-range-list'}>
+                {Array.from({ length: max + 1 - min }, (_, i) =>
+                    <option className={optionClass(i)} key={i + min} value={i + min} label={i + min} />
+                )}
+            </datalist>
+        </div>
+    );
+}

@@ -1,0 +1,165 @@
+@mixin progress {
+    background: linear-gradient(
+        var(--progress_covered), var(--progress_covered)
+    ) 0 / calc(
+        var(--thumb-size) / 4 + var(--progress) * (100% - var(--thumb-size) / 2)
+    ) 100% no-repeat, var(--progress_remaining);
+}
+
+.custom-range {
+    width: 100%;
+    --thumb-size: 20px;
+    --progress_covered: var(--color-brand-dark);
+    --progress_remaining: var(--color-secondary-light);
+}
+
+.custom-range, .custom-range label, .custom-range option {
+    font-family: var(--font-content);
+    fill: var(--color-brand-dark);
+    color: var(--color-brand-dark);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.custom-range {
+    > div {
+        display: grid;
+        grid-template-columns: 40px 1fr;
+        margin-inline: var(--spacing-s);
+        margin-bottom: var(--spacing-xs);
+        gap: var(--spacing-s);
+        align-items: center;
+    }
+
+    .icon {
+        height: 40px;
+        width: 40px;
+    }
+
+    label {
+        grid-column: 2;
+        cursor: pointer;
+    }
+
+    [type=range] {
+        width: 100%;
+        -webkit-appearance: none;
+        appearance: none;
+        cursor: pointer;
+    }
+
+
+    datalist {
+        width: calc(100% + var(--m));
+        display: flex;
+        justify-content: space-between;
+        margin-inline: calc(-0.5 * var(--m));
+        --m: 5px;
+    }
+
+    option {
+        width: 2ch;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        padding-top: 5px;
+        color: var(--color-shade-3)
+    }
+    
+    &:hover option, &:active option {
+        color: var(--color-shade-4)
+    }
+
+    option::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: -5px;
+        height: 5px;
+        width: 0;
+        border: 1px solid var(--color-secondary-light);
+        z-index: -1;
+    }
+
+    &:hover option::after, &:active option::after {
+        color: var(--color-shade-4);
+        border: 1px solid var(--color-shade-1);
+
+    }
+
+    option.selected:not(.invalid) {
+        color: var(--color-brand-dark)
+    }
+
+    @mixin thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        margin-top: -6px;
+        border: none;
+        height: var(--thumb-size);
+        width: var(--thumb-size);
+        border-radius: calc(var(--thumb-size) / 2);
+        background: var(--color-brand-dark);
+        cursor: pointer;
+        box-sizing: border-box;
+    }
+
+    ::-webkit-slider-thumb { @include thumb; }
+    ::-moz-range-thumb { @include thumb; }
+
+    ::-webkit-slider-thumb:active { background: var(--color-brand-dark); }
+    ::-moz-range-thumb:active { background: var(--color-brand-dark); }
+
+    &:active option.selected:not(.invalid) {
+        color: var(--color-brand-dark);
+    }
+
+    &:hover ::-moz-range-track {
+        @include progress;
+        --progress_remaining: var(--color-shade-1);
+    }
+    
+    &:active ::-moz-range-track {
+        @include progress;
+        --progress_remaining: var(--color-shade-2);
+    }
+    
+    &:active ::-webkit-slider-runnable-track {
+        @include progress;
+        --progress_remaining: var(--color-shade-1);
+    }
+
+    @mixin track {
+        -webkit-appearance: none;
+        appearance: none;
+        height: 6px;
+        border-radius: 6px;
+        @include progress;
+    }
+    
+    ::-webkit-slider-runnable-track { @include track; }
+    ::-moz-range-track { @include track; }
+
+    ::-webkit-slider-container {
+        min-block-size: 0px;
+        margin-bottom: 7px;
+    }
+
+    &:has(option:where(.invalid.selected)) {
+        ::-webkit-slider-thumb { background: var(--color-shade-5); }
+        ::-moz-range-thumb { background: var(--color-shade-5); }
+
+        --progress_covered: var(--color-shade-2);
+
+        &:hover {
+            ::-webkit-slider-thumb { background: var(--color-brand-dark); }
+            ::-moz-range-thumb { background: var(--color-brand-dark); }
+
+            --progress_covered: var(--color-shade-3);
+        }
+
+        &:active {
+            --progress_covered: var(--color-shade-4);
+        }
+    }
+}

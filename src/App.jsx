@@ -82,12 +82,6 @@ const App = () => {
         guests
     };
 
-    useEffect(() => {
-        fetchTimes(now).then(payload => {
-            dispatch({ type: 'times_fetched', payload })
-        });
-    }, []);
-
     return (
         <BrowserRouter>
             <HeaderNav/>

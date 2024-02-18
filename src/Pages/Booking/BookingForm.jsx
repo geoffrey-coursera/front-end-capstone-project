@@ -47,6 +47,22 @@ const guestsRule = {
     type: 'error'
 };
 
+const useDelay = state => {
+    const stateTimer = useRef(null);
+    const [delayed, setDelayed] = useState(state);
+
+    useEffect(() => {
+        if(state) {
+            stateTimer.current = setTimeout(() => { setDelayed(true) }, 0);
+        } else {
+            clearTimeout(stateTimer.current);
+            setDelayed(false);
+        }
+    }, [state]);
+
+    return delayed;
+}
+
 const BookingForm = ({
     timeSlots, getTimeSlots, dispatch, getISODate, currentDate,
     guests, setGuests,
@@ -59,6 +75,8 @@ const BookingForm = ({
     const date = getISODate(dateTime);
     const [ok, setOk] = useState(null);
     const [errors, report] = useValidation(['res-date','res-time','guests']);
+    
+    const delayedLoading = useDelay(loading);
 
     useEffect(() => { getTimeSlots(dateTime) }, [date]);
 
@@ -85,7 +103,7 @@ const BookingForm = ({
             </Validate>
             <Validate onError={report('res-time')}>
                 <Select
-                    disabled={!availableSlots.length || loading}
+                    disabled={!availableSlots.length || delayedLoading}
                     icon={<TimeIcon />}
                     id="res-time"
                     name="res-time"

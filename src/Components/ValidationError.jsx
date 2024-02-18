@@ -5,6 +5,14 @@ import './ValidationError.scss';
 
 export { ValidationError as default };
 
+const debounce = (f, delay) => {
+    let timer;
+    return () => {
+        if(timer) clearTimeout(timer);
+        timer = setTimeout(f, delay)
+    }
+};
+
 const computeHeight = content => {
     const style = getComputedStyle(content);
     const margin = parseFloat(style.marginTop);
@@ -21,7 +29,7 @@ const ValidationError = ({ children, type }) => {
         parent.current.style.height = computeHeight(child.current) + 'px';
     };
     
-    useEffect(onUpdate, [children]);
+    useEffect(debounce(onUpdate, 0), [children]);
 
     useEffect(() => {
         window.addEventListener('resize', onUpdate);

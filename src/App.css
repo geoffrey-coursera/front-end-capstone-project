@@ -13,12 +13,13 @@
     --col-w: minmax(0, calc((900px - 13 * 20px) / 12));
 }
 
-:is(main > section, footer) {
+:where(main > section, footer) {
     display: grid;
     grid-column: var(--span-all);
     grid-template-columns: subgrid;
 }
-:is(main > section) > * {
+
+:where(main > section) > * {
     grid-column: start / end;
 }
 

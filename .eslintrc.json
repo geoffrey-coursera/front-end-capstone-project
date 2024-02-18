@@ -1,0 +1,6 @@
+{
+    "extends": ["react-app", "eslint:recommended"],
+    "rules": {
+        "no-use-before-define": "off"
+    }
+}

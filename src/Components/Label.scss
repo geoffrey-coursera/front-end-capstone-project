@@ -1,0 +1,22 @@
+.custom-label {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: var(--spacing-s);
+    align-items: center;
+    padding-inline: var(--spacing-s);
+}
+
+.custom-label {
+    .icon {
+        height: 40px;
+         width: 40px;
+    }
+
+    label {
+        cursor: pointer;
+        font-family: var(--font-content);
+        color: var(--color-brand-dark);
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+}

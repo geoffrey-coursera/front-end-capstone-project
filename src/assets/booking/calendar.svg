@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.5 27.1">
+<style type="text/css">
+	.calendar-main{fill:none;stroke:#495E57;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+	.calendar-text{fill:#4C5E58;}
+	.calendar-holder{fill:none;stroke:#495E57;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+</style>
+<path class="calendar-main" d="M30.9,22.8V5.8c0-1.9-1.5-3.4-3.4-3.4H6C4.1,2.4,2.6,4,2.6,5.8v16.9c0,1.9,1.5,3.4,3.4,3.4h21.5
+	C29.4,26.2,30.9,24.7,30.9,22.8z M3.2,8.7h27.3"/>
+<path class="calendar-text" d="M12,14.7l-1,0.8H9.8v-1l2.5-1.8h1.6v9.9H12V14.7z"/>
+<path class="calendar-text" d="M16.1,19.1v-2.9c0-2,1.4-3.6,3.8-3.6c2.4,0,3.8,1.6,3.8,3.6v2.9c0,2-1.4,3.6-3.8,3.6
+	C17.5,22.8,16.1,21.1,16.1,19.1z M21.9,19.1v-2.9c0-1.2-0.6-2.2-2-2.2c-1.3,0-2,1-2,2.2v2.9c0,1.2,0.7,2.2,2,2.2
+	C21.2,21.3,21.9,20.3,21.9,19.1z"/>
+<path class="calendar-holder" d="M11.3,1.1l-0.1,2.7L11.3,1.1z M22.3,1.1l-0.1,2.7L22.3,1.1z"/>
+</svg>

@@ -10,4 +10,12 @@
         display: grid;
         gap: var(--spacing-xs);
     }
+
+    input[type=date] {
+        color: var(--color-brand-dark);
+        font-family: var(--font-content);
+        font-size: 1.1rem;
+        font-weight: bold;
+        padding: var(--spacing-s) var(--spacing-xs)
+    }
 }

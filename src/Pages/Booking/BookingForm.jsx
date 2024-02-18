@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Select, { Option } from 'Components/Select';
 import Range from 'Components/Range';
+import Label from 'Components/Label';
 
+import { ReactComponent as CalendarIcon } from 'assets/booking/calendar.svg';
 import { ReactComponent as OccasionIcon } from 'assets/booking/occasion.svg';
 import { ReactComponent as TimeIcon } from 'assets/booking/time.svg';
 import { ReactComponent as GuestsIcon } from 'assets/booking/guests.svg';
@@ -37,7 +39,7 @@ const BookingForm = ({
         >
             <h1>Reserve a table</h1>
             <fieldset>
-                <label htmlFor="res-date">Choose date</label>
+                <Label icon={<CalendarIcon />} htmlFor="res-date">Choose a date</Label>
                 <input
                     id="res-date"
                     type="date"

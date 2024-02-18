@@ -33,33 +33,35 @@
     object-fit: cover;
 }
 
-#about img:first-of-type {
-    z-index: 0;
-    grid-column: mid / span 4;
-    grid-row: 2/5;
-    border-bottom-left-radius: var(--border-radius);
-}
+@media (min-width: 709px) {
+    #about::after {
+        content: '';
+        z-index: 1;
+        grid-column: span 2 / -4;
+        grid-row: 2/4;
+        background: var(--color-brand-dark);
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: calc(100% + var(--spacing-s));
+        height: calc(100% + var(--spacing-s));
+        opacity: 0.75;
+        mix-blend-mode: multiply;
+    }
 
-#about img:last-of-type {
-    z-index: 2;
-    grid-column: span 4 / end;
-    grid-row: 1/4;
-    border-top-right-radius: var(--border-radius);
-}
-
-#about::after {
-    content: '';
-    z-index: 1;
-    grid-column: span 2 / -4;
-    grid-row: 2/4;
-    background: var(--color-brand-dark);
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: calc(100% + var(--spacing-s));
-    height: calc(100% + var(--spacing-s));
-    opacity: 0.75;
-    mix-blend-mode: multiply;
+    #about img:first-of-type {
+        z-index: 0;
+        grid-column: mid / span 4;
+        grid-row: 2/5;
+        border-bottom-left-radius: var(--border-radius);
+    }
+    
+    #about img:last-of-type {
+        z-index: 2;
+        grid-column: span 4 / end;
+        grid-row: 1/4;
+        border-top-right-radius: var(--border-radius);
+    }
 }
 
 #about h2 {
@@ -71,4 +73,49 @@
     color: var(--color-secondary-accent);
     margin-top: 8px;
     font-size: var(--sub-heading);
+}
+
+@media (max-width: 710px) {
+    #about {
+        grid-template-rows: auto 1fr;
+        row-gap: var(--spacing-m);
+    }
+    #about .wrapper {
+        margin-left: 0;
+        grid-column: start / end;
+        display: grid;
+        grid-template-columns: subgrid;
+        grid-template-rows: subgrid;
+    }
+
+    #about header {
+        grid-column: start / end;
+    }
+
+    #about p {
+        margin: 0;
+        grid-column: start / mid;
+    }
+
+    #about img:nth-of-type(n) {
+        grid-column: mid / end;
+        grid-row: 2/4;
+    }
+}
+
+@media (max-width: 490px) {
+    #about {
+        grid-template-rows: auto 1fr calc(400px);
+        row-gap: var(--spacing-m);
+    }
+
+    #about img:nth-of-type(n) {
+        grid-column: start / end;
+        grid-row: 3/4;
+    }
+
+    #about p {
+        margin: 0;
+        grid-column: start / end;
+    }
 }

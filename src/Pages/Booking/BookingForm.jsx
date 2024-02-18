@@ -146,6 +146,7 @@ const BookingForm = ({
                     renderIcon={(className) => <GuestsIcon {...{className}} />}
                     title="Number of guests"
                     id="guests"
+                    name="res-guests"
                     value={guests}
                     min={0} minValid={1} max={10}
                     onChange={change(setGuests)}

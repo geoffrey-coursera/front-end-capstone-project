@@ -11,6 +11,7 @@ const Range = ({
     renderIcon,
     title,
     id,
+    name,
     min,
     max,
     minValid=min,
@@ -45,6 +46,7 @@ const Range = ({
             </div>
             <input
                 type="range"
+                name={name}
                 id={id}
                 list={id + '-range-list'}
                 min={min}

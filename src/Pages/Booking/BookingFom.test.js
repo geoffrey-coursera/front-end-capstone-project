@@ -1,22 +1,24 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 import BookingForm, * as rule from './BookingForm';
 import App, { updateTimes } from 'App';
 import { isTimeSlot } from 'availableTimes.test'
 import { fetchTimes, getISODate } from 'availableTimes'
 import { Fixture, dependencies } from 'fixtures'
 
+const currentDate = '2000-01-30';
+
 const base = {
     timeSlots: {
         availableSlots: [],
         selectedSlot: '',
-        date: new Date()
+        date: new Date(currentDate)
     },
     getTimeSlots: () => Promise.resolve([]),
     dispatchers: {
         date_selected: () => {},
         time_selected: () => {},
     },
-    currentDate: '',
+    currentDate,
     onSubmit: () => {},
     onSuccess: () => {},
     guests: 0,
@@ -24,11 +26,25 @@ const base = {
     getISODate: () => ''
 };
 
+test('HTML5 validation attributes are applied', () => {
+    const props = base;
+
+    const { container, findByText } = render(<BookingForm {...props} />);
+
+    
+    const dateInput = container.querySelector('[name=res-date]');
+    expect(dateInput.min).toMatch(currentDate);
+    
+    const guestsInput = container.querySelector('[name=res-guests]');
+    expect(guestsInput.max).toMatch('10');
+    expect(guestsInput.min).toMatch('0'); // min is 0 to force the user to make a choice
+})
+
 test('Renders the BookingForm heading', () => {
     const props = base;
 
-    render(<BookingForm {...props} />);
-    const headingElement = screen.getByText("Reserve a table");
+    const { getByText } = render(<BookingForm {...props} />);
+    const headingElement = getByText("Reserve a table");
 
     expect(headingElement).toBeInTheDocument();
 })

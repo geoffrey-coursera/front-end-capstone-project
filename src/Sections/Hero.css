@@ -54,3 +54,34 @@
 #hero h2 {
     font-size: var(--sub-heading);
 }
+
+@media (width < 730px) {
+    #hero {
+        text-align: center;
+        color: white;
+        grid-template-rows: auto 400px;
+    }
+
+    #hero h1 {
+        white-space: unset;
+        margin-bottom: var(--spacing-s);
+    }
+
+    #hero .wrapper {
+        grid-column: start / end;
+    }
+
+    #hero header, #hero a {
+        margin: auto;
+    }
+    
+    #hero img {
+        grid-column: start / end;
+        grid-row: 2/3;
+        margin: 0;
+    }
+
+    #hero::after {
+        content: unset;
+    }
+}

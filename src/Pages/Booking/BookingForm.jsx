@@ -27,6 +27,12 @@ const BookingForm = ({
 
     const { availableSlots, selectedSlot } = timeSlots;
     const [ok, setOk] = useState(null);
+    const [errors, setErrors] = useState({
+        'res-time': { error: false, touched: false },
+        'guests': { error: false, touched: false }
+    });
+
+    const setError = name => state => setErrors(errors => ({...errors, [name]: state }));
 
     useEffect(() => {
         if(mounted.current) {
@@ -54,18 +60,26 @@ const BookingForm = ({
                     onChange={apply(setDate)}
                 />
             </fieldset>
-            <BookingSlots
-                id="res-time"
-                onChange={apply(payload => dispatch({ type: 'time_selected', payload }))}
-                selectedSlot={selectedSlot}
-                availableSlots={availableSlots}
-                isToday={date === currentDate}
-            />
+            <Validate onError={setError('res-time')} onRender={() => availableSlots.length ? [] : [
+                `Sorry, there are no more time slots available ${date === currentDate ? 'today' : 'that day'}. Try a different day.`
+            ]}>
+                <Select
+                    disabled={!availableSlots.length}
+                    icon={<TimeIcon />}
+                    id="res-time"
+                    name="res-time"
+                    title="Choose a time"
+                    value={selectedSlot}
+                    onChange={apply(payload => dispatch({ type: 'time_selected', payload }))}
+                >
+                    {availableSlots.map(time => <Option key={time}>{time}</Option>)}
+                </Select>
+            </Validate>
             {/* I'm not implementing HTML5 validation on the min number of guests 
                 because I want to make sure the user selects a number of guests
                 and does not submit `1` by mistake, hence the `minValid` attr.
             */}
-            <Validate onChange={apply(x => Number(x) ? [] : [
+            <Validate onError={setError('guests')} onChange={apply(x => Number(x) ? [] : [
                 'You need to specify a number of guests'
             ])}>
                 <Range
@@ -90,7 +104,7 @@ const BookingForm = ({
                 <Option>Anniversary</Option>
             </Select>
             <input
-                disabled
+                disabled={!isSubmittable(errors)}
                 className="button-primary"
                 type="submit"
                 value="Make Your reservation"
@@ -100,20 +114,14 @@ const BookingForm = ({
     );
 };
 
-const BookingSlots = ({ id, selectedSlot, onChange, availableSlots, isToday }) => (
-    <Validate onRender={() => availableSlots.length ? [] : [
-        `Sorry, there are no more time slots available ${isToday ? 'today' : 'that day'}. Try a different day.`
-    ]}>
-        <Select
-            disabled={!availableSlots.length}
-            icon={<TimeIcon />}
-            id={id}
-            name={id}
-            title="Choose a time"
-            value={selectedSlot}
-            onChange={onChange}
-        >
-            {availableSlots.map(time => <Option key={time}>{time}</Option>)}
-        </Select>
-    </Validate>
-);
+const isSubmittable = states => {
+    const entries = Object.entries(states);
+
+    const allTouched = entries
+        .filter(([key]) => key !== 'res-date')
+        .every(([_, val]) => val.touched);
+
+    const noError = entries.every(([_, val]) => !val.error);
+
+    return allTouched && noError
+}

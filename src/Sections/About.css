@@ -103,6 +103,7 @@
     #about img:nth-of-type(n) {
         grid-column: start / end;
         grid-row: 3/4;
+        border-radius: var(--border-radius);
     }
     
     #about img:nth-of-type(2) {

@@ -1,7 +1,13 @@
 @use 'media-queries' as media;
 
+html, body {
+    height: 100%;
+}
+
 #root {
+    min-height: 100%;
     display: grid;
+    grid-template-rows: auto 1fr auto;
     column-gap: var(--spacing-m);
     grid-template-columns:
         1fr
@@ -27,7 +33,7 @@
             [end]
             1fr;
     
-        --col-w: minmax(0,auto);
+        --col-w: minmax(0, 100%);
     }
 }
 

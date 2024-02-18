@@ -1,7 +1,7 @@
 import { Dependencies } from './dependencies';
 import { MemoryRouter } from 'react-router-dom';
 
-export { DefaultFixture as default };
+export { DefaultFixture as default, dependencies };
 
 const dependencies = {
     dateNow: () => new Date(2000, 0, 1, 12),

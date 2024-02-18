@@ -13,6 +13,9 @@ import './BookingForm.scss';
 
 export { BookingForm as default };
 
+/* test */
+export { timeSlotsRule, validDateRule, nonEmptyRule, futureDateRule, guestsRule, submitRule, isSubmittable };
+
 const apply = setter => e => setter(e.target.value);
 
 const after = g => f => (...xs) => { apply(f)(...xs); g(); };

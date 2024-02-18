@@ -26,7 +26,9 @@ const ValidationError = ({ children, type }) => {
     const child = useRef(null);
 
     const onUpdate = () => {
-        parent.current.style.height = computeHeight(child.current) + 'px';
+        if(parent.current) {
+            parent.current.style.height = computeHeight(child.current) + 'px';
+        }
     };
     
     useEffect(debounce(onUpdate, 0), [children]);

@@ -1,4 +1,3 @@
-import React from 'react-dom';
 import GreekSalad from 'assets/specials/greek-salad.jpg';
 import Bruschetta from 'assets/specials/bruschetta.jpg';
 import LemonDessert from 'assets/specials/lemon-dessert.jpg';

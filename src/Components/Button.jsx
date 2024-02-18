@@ -1,4 +1,3 @@
-import React from 'react-dom';
 import { Link } from "react-router-dom";
 
 import './Button.css';

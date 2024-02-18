@@ -1,4 +1,3 @@
-import React from 'react-dom';
 import Chefs from 'assets/chicago/Mario-and-Adrian-vertical.jpg';
 import Restaurant from 'assets/chicago/restaurant-vertical.jpg';
 

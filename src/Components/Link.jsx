@@ -1,4 +1,3 @@
-import React from 'react-dom';
 import { Link as RouterLink } from "react-router-dom";
 
 import './Link.css';

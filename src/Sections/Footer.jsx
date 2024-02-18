@@ -1,4 +1,3 @@
-import React from 'react-dom';
 import Nav from 'Components/Nav';
 import LogoFooter from 'assets/logo-vertical-white.png';
 

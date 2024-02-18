@@ -1,5 +1,3 @@
-import React from 'react-dom';
-
 import './Burger.scss';
 
 export { Burger as default };

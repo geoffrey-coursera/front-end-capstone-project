@@ -43,7 +43,7 @@ const BookingForm = ({
             id="booking-form"
             onSubmit={onSubmit(() => goTo('/confirmed-booking'), () => setOk(false))}
         >
-            <h1>Reserve a table</h1>
+            <h1>Reserve a table</h1>
             <fieldset>
                 <Label icon={<CalendarIcon />} htmlFor="res-date">Choose a date</Label>
                 <input

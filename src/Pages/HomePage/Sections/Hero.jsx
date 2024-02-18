@@ -1,7 +1,7 @@
 import React from 'react-dom';
-import StartersPlate from '../assets/starters-plate.jpg';
-import Button from '../Components/Button';
-import Emphasis from '../Components/Emphasis';
+import StartersPlate from 'assets/starters-plate.jpg';
+import Button from 'Components/Button';
+import Emphasis from 'Components/Emphasis';
 
 import './Hero.css';
 

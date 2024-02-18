@@ -1,10 +1,10 @@
 import React from 'react-dom';
-import GreekSalad from '../assets/specials/greek-salad.jpg';
-import Bruschetta from '../assets/specials/bruschetta.jpg';
-import LemonDessert from '../assets/specials/lemon-dessert.jpg';
-import Delivery from '../assets/specials/delivery.png';
-import Button from '../Components/Button';
-import Link from '../Components/Link';
+import GreekSalad from 'assets/specials/greek-salad.jpg';
+import Bruschetta from 'assets/specials/bruschetta.jpg';
+import LemonDessert from 'assets/specials/lemon-dessert.jpg';
+import Delivery from 'assets/specials/delivery.png';
+import Button from 'Components/Button';
+import Link from 'Components/Link';
 
 import './Specials.css';
 

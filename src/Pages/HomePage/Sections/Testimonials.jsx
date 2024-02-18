@@ -1,9 +1,9 @@
 import React from 'react-dom';
 
-import AlanTuring from '../assets/testimonials/alan-turing.jpg'
-import GraceHopper from '../assets/testimonials/grace-hopper.jpg'
-import AlonzoChurch from '../assets/testimonials/alonzo-church.jpg'
-import HedyLamarr from '../assets/testimonials/hedy-lamarr.jpg'
+import AlanTuring from 'assets/testimonials/alan-turing.jpg'
+import GraceHopper from 'assets/testimonials/grace-hopper.jpg'
+import AlonzoChurch from 'assets/testimonials/alonzo-church.jpg'
+import HedyLamarr from 'assets/testimonials/hedy-lamarr.jpg'
 
 import './Testimonials.css';
 

@@ -1,7 +1,7 @@
 import React from 'react-dom';
-import Logo from '../assets/Logo.png';
-import Nav from '../Components/Nav';
-import Burger from '../Components/Burger';
+import Logo from 'assets/Logo.png';
+import Nav from 'Components/Nav';
+import Burger from 'Components/Burger';
 
 import './HeaderNav.css';
 

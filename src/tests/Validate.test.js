@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import Validate, { applyRules, override } from "./Validate";
+import Validate, { applyRules, override } from "../Components/Validate";
 
 describe('Render as many errors as there are rules', () => {
     const rules = [1, 2].map(i => ({

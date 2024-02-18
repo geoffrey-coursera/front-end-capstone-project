@@ -1,4 +1,4 @@
-import { enumerateTimeSlots, fetchTimes, getTimeSlots } from './availableTimes';
+import { enumerateTimeSlots, fetchTimes, getTimeSlots } from '../availableTimes';
 
 export { laterThan, isTimeSlot };
 

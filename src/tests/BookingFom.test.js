@@ -1,7 +1,7 @@
 import { render, fireEvent, waitFor } from "@testing-library/react";
-import BookingForm, * as rule from './BookingForm';
+import BookingForm, * as rule from 'Pages/Booking/BookingForm';
 import App, { updateTimes } from 'App';
-import { isTimeSlot } from 'availableTimes.test'
+import { isTimeSlot } from 'tests/availableTimes.test'
 import { fetchTimes, getISODate } from 'availableTimes'
 import { Fixture, dependencies } from 'fixtures'
 

@@ -10,7 +10,23 @@
         [end]
         1fr;
 
-    --col-w: minmax(0, calc((900px - 13 * 20px) / 12));
+    --col-w: minmax(0, var(--col-max-w));
+    --col-max-w: 54px;
+}
+
+@media (width < 940px) {
+    #root {
+        grid-template-columns:
+            1fr
+            [start] 
+            repeat(3, var(--col-w))
+            [mid]
+            repeat(3, var(--col-w))
+            [end]
+            1fr;
+    
+        --col-w: minmax(0,auto);
+    }
 }
 
 :where(main > section, footer) {

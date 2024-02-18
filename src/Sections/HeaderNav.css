@@ -13,8 +13,9 @@
 #header-nav ul {
     display: flex;
     list-style: none;
-    justify-content: space-between;
+    justify-content: end;
     width: 100%;
+    gap: var(--spacing-m);
 }
 
 #header-nav a {

@@ -1,6 +1,9 @@
 #about {
     position: relative;
+    grid-column: start / end;
     grid-template-rows: var(--_s) auto auto var(--_s);
+    grid-template-columns:
+        [start] 50% [mid] 1fr var(--col-max-w) 1fr [end];
     min-height: clamp(360px, 50vw, 500px);
     --_s: minmax(
         calc(2 * var(--spacing-m)),
@@ -13,7 +16,6 @@
 }
 
 #about .wrapper {
-    grid-column: start / mid;
     grid-row: var(--span-all);
     margin-left: max(0px, calc(33% - var(--spacing-xl)))
 }
@@ -33,11 +35,11 @@
     object-fit: cover;
 }
 
-@media (min-width: 709px) {
+@media (width > 790px) {
     #about::after {
         content: '';
         z-index: 1;
-        grid-column: span 2 / -4;
+        grid-column: 3 / -2;
         grid-row: 2/4;
         background: var(--color-brand-dark);
         position: absolute;
@@ -49,16 +51,16 @@
         mix-blend-mode: multiply;
     }
 
-    #about img:first-of-type {
+    #about img:nth-of-type(1) {
         z-index: 0;
-        grid-column: mid / span 4;
+        grid-column: mid / span 2;
         grid-row: 2/5;
         border-bottom-left-radius: var(--border-radius);
     }
     
-    #about img:last-of-type {
+    #about img:nth-of-type(2) {
         z-index: 2;
-        grid-column: span 4 / end;
+        grid-column: 3 / end;
         grid-row: 1/4;
         border-top-right-radius: var(--border-radius);
     }
@@ -75,11 +77,12 @@
     font-size: var(--sub-heading);
 }
 
-@media (max-width: 710px) {
+@media (width <= 790px) {
     #about {
-        grid-template-rows: auto 1fr;
-        row-gap: var(--spacing-m);
+        grid-template-rows: auto 1fr calc(400px);
+        gap: var(--spacing-m);
     }
+
     #about .wrapper {
         margin-left: 0;
         grid-column: start / end;
@@ -94,28 +97,11 @@
 
     #about p {
         margin: 0;
-        grid-column: start / mid;
-    }
-
-    #about img:nth-of-type(n) {
-        grid-column: mid / end;
-        grid-row: 2/4;
-    }
-}
-
-@media (max-width: 490px) {
-    #about {
-        grid-template-rows: auto 1fr calc(400px);
-        row-gap: var(--spacing-m);
+        grid-column: start / end;
     }
 
     #about img:nth-of-type(n) {
         grid-column: start / end;
         grid-row: 3/4;
-    }
-
-    #about p {
-        margin: 0;
-        grid-column: start / end;
     }
 }

@@ -2,6 +2,15 @@ footer {
     color: var(--color-paper);
     background: var(--color-brand-dark);
     padding-block: var(--spacing-l);
+    grid-template-columns:
+        1fr
+        [start]
+        100px
+        [content]
+        calc(100% - 100px - 3 * var(--spacing-m))
+        [end]
+        1fr;
+    gap: var(--spacing-m);
 }
 
 footer ul {
@@ -21,18 +30,20 @@ footer a, footer path {
     fill: var(--color-paper);
 }
 
-@media (width > 560px){
-    footer > img {
-        grid-column: start / span 2;
-    }
+footer > img {
+    grid-column: start / span 1;
 }
 
 footer > div {
-    grid-column: 4 / end;
+    grid-column: content / end;
     display: grid;
     grid-auto-flow: column;
     gap: var(--spacing-m);
     justify-items: center;
+}
+
+footer section:first-of-type {
+    justify-self: center;
 }
 
 footer h2 {
@@ -44,7 +55,6 @@ footer h2 {
         grid-template-columns: auto auto;
         grid-template-rows: auto auto;
         justify-items: start;
-        grid-column: 5 / end;
     }
 
     footer nav {

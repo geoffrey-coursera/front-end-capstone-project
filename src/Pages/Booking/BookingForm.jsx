@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Select, { Option } from 'Components/Select';
 import Range from 'Components/Range';
-import Label from 'Components/Label';
+import DateInput from 'Components/DateInput';
 import Validate from 'Components/Validate';
 
 import { ReactComponent as CalendarIcon } from 'assets/booking/calendar.svg';
@@ -50,16 +50,15 @@ const BookingForm = ({
             onSubmit={onSubmit(() => goTo('/confirmed-booking'), () => setOk(false))}
         >
             <h1>Reserve a table</h1>
-            <fieldset>
-                <Label icon={<CalendarIcon />} htmlFor="res-date">Choose a date</Label>
-                <input
-                    id="res-date"
-                    type="date"
-                    value={date}
-                    min={currentDate}
-                    onChange={apply(setDate)}
-                />
-            </fieldset>
+            <DateInput
+                id="res-date"
+                value={date}
+                onChange={apply(setDate)}
+                icon={<CalendarIcon />}
+                min={currentDate}
+            >
+                Choose a date
+            </DateInput>
             <Validate onError={setError('res-time')} onRender={() => availableSlots.length ? [] : [
                 `Sorry, there are no more time slots available ${date === currentDate ? 'today' : 'that day'}. Try a different day.`
             ]}>

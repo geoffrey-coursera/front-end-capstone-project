@@ -11,28 +11,6 @@
         text-align: center;
     }
 
-    fieldset {
-        border: none;
-        display: grid;
-        gap: var(--spacing-xs);
-    }
-
-    input[type=date] {
-        color: var(--color-brand-dark);
-        font-family: var(--font-content);
-        font-size: 1.1rem;
-        font-weight: bold;
-        padding: var(--spacing-s) var(--spacing-xs);
-        border-radius: calc(var(--border-radius) / 1.5);
-        border: var(--border-width) solid var(--color-secondary-light);
-    }
-    
-    *:has(input[type=date]):has(label:hover) input[type=date],
-    input[type=date]:hover {
-        border-color: var(--color-shade-1);
-
-    }
-
     input[type=submit] {
         margin-top: var(--spacing-s);
     }

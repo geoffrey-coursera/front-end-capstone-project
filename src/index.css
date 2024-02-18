@@ -19,6 +19,8 @@
 
     --span-all: -1/1;
 
+    --duration-m: 0.4s;
+
     --heading-1: 4rem;
     --sub-heading: 2.5em;
     --heading-2: 1.8rem;

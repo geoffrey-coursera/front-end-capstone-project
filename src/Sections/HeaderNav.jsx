@@ -1,6 +1,7 @@
 import React from 'react-dom';
 import Logo from '../assets/Logo.png';
 import Nav from '../Components/Nav';
+import Burger from '../Components/Burger';
 
 import './HeaderNav.css';
 
@@ -16,6 +17,6 @@ const HeaderNav = ({ children }) => (
                 alt="Little Lemon Restaurant"
             />
         </header>
-        <Nav/>
+        <Nav burger={<Burger />}/>
     </div>
 )

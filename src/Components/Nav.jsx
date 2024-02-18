@@ -2,9 +2,10 @@ import React from 'react-dom';
 
 export { Nav as default };
 
-const Nav = () => (
+const Nav = ({ burger=null }) => (
     <nav>
         <ul>{pageTitles.map(NavLink)}</ul>
+        {burger}
     </nav>
 );
 

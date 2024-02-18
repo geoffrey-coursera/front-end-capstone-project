@@ -15,6 +15,8 @@ export { BookingForm as default };
 
 const apply = setter => e => setter(e.target.value);
 
+const after = g => f => (...xs) => { apply(f)(...xs); g(); };
+
 const timeSlotsRule = (date, availableSlots, currentDate, loading) => ({
     label: 'no time slots',
     predicate: () => availableSlots.length,
@@ -46,11 +48,11 @@ const guestsRule = {
     type: 'error'
 };
 
-const submitRule = (ok, loading) => ({
+const submitRule = state => ({
     label: 'submition failure',
-    predicate: () => ok !== false,
+    predicate: () => state !== 'error',
     message: 'Submission failed. Try again.',
-    isLoading: loading,
+    isLoading: state === 'pending',
     loadingMessage: 'Sending reservation...'
 });
 
@@ -79,23 +81,21 @@ const BookingForm = ({
 
     const { availableSlots, selectedSlot, date: dateTime, loading } = timeSlots;
     const date = getISODate(dateTime);
-    const [ok, setOk] = useState(null);
-    const [isSending, setIsSending] = useState(false);
+    const [formState, setFormState] = useState('idle'); // idle | pending | ok | error
     const [errors, report] = useValidation(['res-date','res-time','guests']);
     
     const delayedLoading = useDelay(loading);
 
     useEffect(() => { getTimeSlots(dateTime) }, [date]);
 
-    const send = state => f => (...xs) => { f(...xs); setIsSending(state); }
+    const act = (state, f=() => {}) => (...xs) => { setFormState(state); f(...xs); }
 
-    const end = send(false);
-    const start = send(true);
+    const change = after(() => setFormState('idle'));
 
     return (
         <form
             id="booking-form"
-            onSubmit={start(onSubmit(end(onSuccess), end(() => setOk(false))))}
+            onSubmit={act('pending', onSubmit(act('ok', onSuccess), act('error')))}
         >
             <h1>Reserve a table</h1>
             <Validate
@@ -106,7 +106,7 @@ const BookingForm = ({
                 <DateInput
                     id="res-date"
                     value={date}
-                    onChange={apply(payload => dispatch({ type: 'date_selected', payload }))}
+                    onChange={change(payload => dispatch({ type: 'date_selected', payload }))}
                     icon={<CalendarIcon />}
                     min={currentDate}
                 >
@@ -121,7 +121,7 @@ const BookingForm = ({
                     name="res-time"
                     title="Choose a time"
                     value={selectedSlot}
-                    onChange={apply(payload => dispatch({ type: 'time_selected', payload }))}
+                    onChange={change(payload => dispatch({ type: 'time_selected', payload }))}
                 >
                     {availableSlots.map(time => <Option key={time}>{time}</Option>)}
                 </Select>
@@ -138,7 +138,7 @@ const BookingForm = ({
                     id="guests"
                     value={guests}
                     min={0} minValid={1} max={10}
-                    onChange={apply(setGuests)}
+                    onChange={change(setGuests)}
                 />
             </Validate>
             <Select
@@ -152,7 +152,7 @@ const BookingForm = ({
                 <Option>Engagement</Option>
                 <Option>Anniversary</Option>
             </Select>
-            <Validate onRender={submitRule(ok, isSending)}>
+            <Validate onRender={submitRule(formState)}>
                 <input
                     disabled={!isSubmittable(errors)}
                     className="button-primary"

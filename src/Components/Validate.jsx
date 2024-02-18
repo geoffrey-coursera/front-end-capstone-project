@@ -69,9 +69,7 @@ const useValidation = names => {
     return [errors, report];
 };
 
-const hash = JSON.stringify;
-
-const equalImpl = (a, b) =>
+const equal = hash => (a, b) =>
     hash(a) === (typeof b === 'string' ? b : hash(b));
 
 const Validate = ({
@@ -79,7 +77,7 @@ const Validate = ({
     onError=() => {},
     onRender=[],
     onChange=[],
-    equal=equalImpl
+    hash=JSON.stringify
 }) => {
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState(false);
@@ -90,7 +88,7 @@ const Validate = ({
     const hashedRenderErrors = hash(renderErrors);
     
     useEffect(() => {
-        if(!equal(errors, hashedRenderErrors)) {
+        if(!equal(hash)(errors, hashedRenderErrors)) {
             setErrors(override(renderErrors));
             onError({ touched, error: hasErrors(renderErrors) });
         }

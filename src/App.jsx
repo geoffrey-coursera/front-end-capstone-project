@@ -1,6 +1,7 @@
 import { useEffect, useReducer, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDependencies } from './dependencies';
+import { bindActions } from 'lib/reducer';
 
 import HeaderNav from 'Sections/HeaderNav';
 import Footer from 'Sections/Footer';
@@ -68,12 +69,15 @@ const App = () => {
         loading: true
     });
 
-    const getTimeSlots = date => fetchTimes(date).then(
-        payload => dispatch({ type: 'times_fetched', payload })
+    const dispatchers = bindActions(
+        ['date_selected', 'time_selected', 'times_fetched'],
+        dispatch
     );
 
+    const getTimeSlots = date => fetchTimes(date).then(dispatchers.times_fetched);
+
     const bookingFormProps = {
-        timeSlots, getTimeSlots, dispatch, getISODate, currentDate,
+        timeSlots, getTimeSlots, dispatchers, getISODate, currentDate,
         guests, setGuests,
         onSubmit: submitForm(submitReservation),
         onSuccess: () => navigate('/confirmed-booking')

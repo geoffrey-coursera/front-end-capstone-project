@@ -12,7 +12,10 @@ test('Renders the BookingForm heading', () => {
             date: new Date()
         },
         getTimeSlots: () => Promise.resolve([]),
-        dispatch: () => {},
+        dispatchers: {
+            date_selected: () => {},
+            time_selected: () => {},
+        },
         currentDate: '',
         onSubmit: () => {},
         onSuccess: () => {},

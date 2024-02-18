@@ -73,7 +73,7 @@ const useDelay = state => {
 }
 
 const BookingForm = ({
-    timeSlots, getTimeSlots, dispatch, getISODate, currentDate,
+    timeSlots, getTimeSlots, dispatchers, getISODate, currentDate,
     guests, setGuests,
     onSubmit, onSuccess
 }) => {
@@ -106,7 +106,7 @@ const BookingForm = ({
                 <DateInput
                     id="res-date"
                     value={date}
-                    onChange={change(payload => dispatch({ type: 'date_selected', payload }))}
+                    onChange={change(dispatchers.date_selected)}
                     icon={<CalendarIcon />}
                     min={currentDate}
                 >
@@ -121,7 +121,7 @@ const BookingForm = ({
                     name="res-time"
                     title="Choose a time"
                     value={selectedSlot}
-                    onChange={change(payload => dispatch({ type: 'time_selected', payload }))}
+                    onChange={change(dispatchers.time_selected)}
                 >
                     {availableSlots.map(time => <Option key={time}>{time}</Option>)}
                 </Select>

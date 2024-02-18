@@ -1,4 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import { useDependencies } from './dependencies';
 
 import HeaderNav from 'Sections/HeaderNav';
@@ -57,6 +58,7 @@ const App = () => {
     
     const now = dateNow();
     const currentDate = getISODate(now);
+    const navigate = useNavigate();
 
     const [guests, setGuests] = useState(0);
     const [timeSlots, dispatch] = useReducer(updateTimes(currentDate), {
@@ -73,7 +75,8 @@ const App = () => {
     const bookingFormProps = {
         timeSlots, getTimeSlots, dispatch, getISODate, currentDate,
         guests, setGuests,
-        onSubmit: submitForm(submitReservation)
+        onSubmit: submitForm(submitReservation),
+        onSuccess: () => navigate('/confirmed-booking')
     };
 
     const confirmedBookingProps = {
@@ -83,7 +86,7 @@ const App = () => {
     };
 
     return (
-        <BrowserRouter>
+        <>
             <HeaderNav/>
             <Routes>
                 <Route path="/" element={<Home />} />
@@ -92,6 +95,6 @@ const App = () => {
                 <Route path="*" element={<Error />} />
             </Routes>
             <Footer/>
-        </BrowserRouter>
+        </>
     );
 }

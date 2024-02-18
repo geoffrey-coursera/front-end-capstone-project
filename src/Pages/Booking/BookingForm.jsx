@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from "react-router-dom";
 import Select, { Option } from 'Components/Select';
 import Range from 'Components/Range';
 import DateInput from 'Components/DateInput';
@@ -66,9 +65,8 @@ const useDelay = state => {
 const BookingForm = ({
     timeSlots, getTimeSlots, dispatch, getISODate, currentDate,
     guests, setGuests,
-    onSubmit
+    onSubmit, onSuccess
 }) => {
-    const goTo = useNavigate();
     const mounted = useRef(false);
 
     const { availableSlots, selectedSlot, date: dateTime, loading } = timeSlots;
@@ -83,7 +81,7 @@ const BookingForm = ({
     return (
         <form
             id="booking-form"
-            onSubmit={onSubmit(() => goTo('/confirmed-booking'), () => setOk(false))}
+            onSubmit={onSubmit(onSuccess, () => setOk(false))}
         >
             <h1>Reserve a table</h1>
             <Validate

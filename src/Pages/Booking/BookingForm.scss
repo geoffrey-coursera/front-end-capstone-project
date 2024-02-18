@@ -18,4 +18,8 @@
         font-weight: bold;
         padding: var(--spacing-s) var(--spacing-xs)
     }
+
+    input[type=submit] {
+        margin-top: var(--spacing-s);
+    }
 }

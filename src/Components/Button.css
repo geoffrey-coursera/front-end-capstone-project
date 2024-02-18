@@ -8,3 +8,13 @@
     cursor: pointer;
     background: var(--color-brand-accent);
 }
+
+.button-primary:disabled {
+    cursor: not-allowed;
+    background: var(--color-secondary-light);
+    color: var(--color-shade-4);
+}
+
+input.button-primary:not(:disabled) {
+    box-shadow: var(--shadow);
+}

@@ -80,6 +80,8 @@ const BookingForm = ({
                 <Option>Anniversary</Option>
             </Select>
             <input
+                disabled
+                className="button-primary"
                 type="submit"
                 value="Make Your reservation"
             />

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.3 28.3">
+<style type="text/css">
+    polyline { stroke-width:1.8 }
+    path { stroke-width:1.5 }
+    polyline, path { fill: none; stroke: #495E57; }
+</style>
+<polyline points="19.7,9.4 13.9,16.4 10.5,13.6 "/>
+<path d="M25.4,14.2c0,6.2-5,11.2-11.2,11.2S3,20.3,3,14.2S8,3,14.2,3S25.4,8,25.4,14.2z M14.2,3v1.7 M14.2,23.7v1.7
+	 M25.4,14.2h-1.7 M4.6,14.2H3"/>
+</svg>

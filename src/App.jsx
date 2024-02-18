@@ -21,7 +21,7 @@ const initializeTimes = fetchAPI;
 
 const updateTimes = (state, { type, payload }) => {
     switch(type) {
-        case 'times_fetched': return { availableSlots: payload, selectedSlot: payload[0] };
+        case 'times_fetched': return { availableSlots: payload, selectedSlot: '' };
         case 'time_selected': return {...state, selectedSlot: payload };
         default: return state
     }
@@ -42,7 +42,7 @@ const App = () => {
     const [guests, setGuests] = useState(2);
     const [timeSlots, dispatch] = useReducer(updateTimes, {
         availableSlots: initialTimes,
-        selectedSlot: initialTimes[0]
+        selectedSlot: ''
     });
 
     const bookingFormProps = {

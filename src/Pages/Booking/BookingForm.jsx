@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import Select, { Option } from 'Components/Select';
 
-
+import OccasionIcon from 'assets/booking/occasion.svg';
+import TimeIcon from 'assets/booking/time.svg';
 import './BookingForm.scss';
 
 export { BookingForm as default };
@@ -41,16 +43,13 @@ const BookingForm = ({
                     onChange={update(setDate)}
                 />
             </fieldset>
-            <fieldset>
-                <label htmlFor="res-time">Choose time</label>
-                <BookingSlots
-                    id="res-time"
-                    onChange={update(payload => dispatch({ type: 'time_selected', payload }))}
-                    selectedSlot={selectedSlot}
-                    availableSlots={availableSlots}
-                    isToday={date === currentDate}
-                />
-            </fieldset>
+            <BookingSlots
+                id="res-time"
+                onChange={update(payload => dispatch({ type: 'time_selected', payload }))}
+                selectedSlot={selectedSlot}
+                availableSlots={availableSlots}
+                isToday={date === currentDate}
+            />
             <fieldset>
                 <label htmlFor="guests">Number of guests</label>
                 <input
@@ -61,13 +60,17 @@ const BookingForm = ({
                     onChange={update(setGuests)}
                 />
             </fieldset>
-            <fieldset>
-                <label htmlFor="occasion">Occasion</label>
-                <select id="occasion">
-                    <option>Birthday</option>
-                    <option>Anniversary</option>
-                </select>
-            </fieldset>
+            <Select
+                icon={OccasionIcon}
+                id="occasion"
+                name="occasion"
+                title="Occasion"
+                defaultOption="Nothing special"
+            >
+                <Option>Birthday</Option>
+                <Option>Engagement</Option>
+                <Option>Anniversary</Option>
+            </Select>
             <input
                 type="submit"
                 value="Make Your reservation"
@@ -80,8 +83,15 @@ const BookingForm = ({
 const BookingSlots = ({ id, selectedSlot, onChange, availableSlots, isToday }) =>
     availableSlots.length
     ? (
-        <select id={id} value={selectedSlot} onChange={onChange}>
-            {availableSlots.map(time => <option key={time}>{time}</option>)}
-        </select>
+        <Select
+            icon={TimeIcon}
+            id={id}
+            name={id}
+            title="Choose a time"
+            value={selectedSlot}
+            onChange={onChange}
+        >
+            {availableSlots.map(time => <Option key={time}>{time}</Option>)}
+        </Select>
     ) : <p>Sorry, there are no more time slots available {isToday ? 'today' : 'that day'}. Try a different day.</p>
 ;

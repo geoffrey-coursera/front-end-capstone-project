@@ -19,12 +19,16 @@
 
     --span-all: -1/1;
 
+    --duration-f: 0.25s;
     --duration-m: 0.4s;
 
     --heading-1: 4rem;
-    --sub-heading: 2.5em;
+    --sub-heading: 2.5rem;
     --heading-2: 1.8rem;
     --heading-3: 1.5rem;
+
+    --font-heading: 'Markazi Text', serif;
+    --font-content: 'Karla', sans-serif;
 }
 
 /* reset */
@@ -38,11 +42,11 @@
 
 :where(body, a) {
     color: var(--color-content);
-    font-family: 'Karla', sans-serif;
+    font-family: var(--font-content);
 }
 
 :where(h1, h2, h3, h4, h5, h6) {
-    font-family: 'Markazi Text', serif;
+    font-family: var(--font-heading);
     line-height: 0.8em;
 }
 

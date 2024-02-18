@@ -4,8 +4,8 @@ import './Reservations.scss';
 
 export { Reservations as default };
 
-const Reservations = () => (
+const Reservations = (props) => (
     <main id="Reservation">
-        <BookingForm />
+        <BookingForm {...props} />
     </main>
 )

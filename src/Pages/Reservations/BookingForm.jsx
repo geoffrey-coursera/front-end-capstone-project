@@ -1,18 +1,12 @@
 import { useState } from 'react';
 
-import { generateTimes } from './availableTimes';
-
 import './BookingForm.scss';
 
 export { BookingForm as default };
 
-const initializeTimes = generateTimes(new Date().getHours(), 22);
-
-const BookingForm = () => {
+const BookingForm = ({ availableTimes, dispatch }) => {
     const now = new Date();
     const currentDate = now.toISOString().slice(0, 10);
-
-    const [availableTimes] = useState(initializeTimes());
 
     const [date, setDate] = useState(currentDate);
     const [time, setTime] = useState(availableTimes[0]);
@@ -28,7 +22,10 @@ const BookingForm = () => {
                     id="res-date"
                     type="date"
                     value={date}
-                    onChange={update(setDate)}
+                    onChange={update(payload => {
+                        setDate(payload);
+                        dispatch({ type: 'select_date', payload });
+                    })}
                 />
             </fieldset>
             <fieldset>

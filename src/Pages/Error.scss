@@ -1,0 +1,11 @@
+:where(#Error) {
+    > article {
+        display: grid;
+        grid-column: start / end;
+        align-content: center;
+        text-align: center;
+        gap: var(--spacing-s);
+        width: 100%;
+        margin-block: var(--spacing-l) var(--spacing-xl);
+    }
+}

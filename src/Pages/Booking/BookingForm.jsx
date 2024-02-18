@@ -70,7 +70,7 @@ const BookingForm = ({
                 icon={<OccasionIcon />}
                 id="occasion"
                 name="occasion"
-                title="Occasion"
+                title="A special occasion?"
                 defaultOption="Nothing special"
             >
                 <Option>Birthday</Option>
@@ -93,7 +93,7 @@ const BookingSlots = ({ id, selectedSlot, onChange, availableSlots, isToday }) =
             icon={<TimeIcon />}
             id={id}
             name={id}
-            title="Choose a time"
+            title="Choose a time"
             value={selectedSlot}
             onChange={onChange}
         >

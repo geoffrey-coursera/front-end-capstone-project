@@ -26,6 +26,7 @@
         grid-column: 2;
         display: block;
         width: 100%;
+        text-align: left;
     }
 
     [role=combobox] {
@@ -41,8 +42,10 @@
         border: none;
         box-shadow: var(--shadow);
         background-color: var(--color-secondary-light);
-        transition-property: background-color, color;
-        transition-duration: var(--duration-f)
+    }
+
+    [role=combobox]:hover {
+        background-color: var(--color-shade-0);
     }
 
     [role=combobox] .arrow {

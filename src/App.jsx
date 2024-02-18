@@ -11,22 +11,36 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import './App.scss';
 
-import { generateTimes } from './availableTimes';
+import { fetchAPI } from './availableTimes';
 
-const initializeTimes = generateTimes(new Date().getHours(), 22);
-const updateTimes = times => times;
+export { initializeTimes, updateTimes };
+
+const initializeTimes = fetchAPI;
+
+const updateTimes = (state, { type, payload }) => {
+    switch(type) {
+        case 'times_fetched': return { availableSlots: payload, selectedSlot: payload[0] };
+        case 'time_selected': return {...state, selectedSlot: payload };
+        default: return state
+    }
+};
+
+// Jest does not support top-level await with this setup so I'm passing this 'sync' flag
+const initialTimes = initializeTimes(new Date(), true);
 
 const App = () => {
-    const [availableTimes, dispatch] = useReducer(updateTimes, initializeTimes());
-    const timesProps = { availableTimes, dispatch };
-
+    const [timeSlots, dispatch] = useReducer(updateTimes, {
+        availableSlots: initialTimes,
+        selectedSlot: initialTimes[0]
+    });
+    const timeProps = { timeSlots, dispatch, fetchTimes: fetchAPI };
 
     return (
         <BrowserRouter>
             <HeaderNav/>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/reservations" element={<Reservations { ...timesProps }/>} />
+                <Route path="/reservations" element={<Reservations { ...timeProps }/>} />
                 <Route path="*" element={<Error />} />
             </Routes>
             <Footer/>

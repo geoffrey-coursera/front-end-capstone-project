@@ -1,42 +1,45 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getISODate } from 'availableTimes';
 
 import './BookingForm.scss';
 
 export { BookingForm as default };
 
-const BookingForm = ({ availableTimes, dispatch }) => {
-    const now = new Date();
-    const currentDate = now.toISOString().slice(0, 10);
-
+const BookingForm = ({ timeSlots, dispatch, fetchTimes }) => {
+    const currentDate = getISODate(new Date());
+    
     const [date, setDate] = useState(currentDate);
-    const [time, setTime] = useState(availableTimes[0]);
+    const { availableSlots, selectedSlot } = timeSlots;
     const [guests, setGuests] = useState(2);
 
     const update = setter => e => setter(e.target.value);
 
+    useEffect(() => {
+        fetchTimes(new Date(date)).then(payload => dispatch({ type: 'times_fetched', payload }))
+    }, [date]);
+
     return (
         <form id="booking-form">
+            <h1>Reserve a table</h1>
             <fieldset>
                 <label htmlFor="res-date">Choose date</label>
                 <input
                     id="res-date"
                     type="date"
                     value={date}
-                    onChange={update(payload => {
-                        setDate(payload);
-                        dispatch({ type: 'select_date', payload });
-                    })}
+                    min={currentDate}
+                    onChange={update(setDate)}
                 />
             </fieldset>
             <fieldset>
                 <label htmlFor="res-time">Choose time</label>
-                <select
+                <BookingSlots
                     id="res-time"
-                    value={time}
-                    onChange={update(setTime)}
-                >
-                    {availableTimes.map(time => <option key={time}>{time}</option>)}
-                </select>
+                    onChange={update(payload => dispatch({ type: 'time_selected', payload }))}
+                    selectedSlot={selectedSlot}
+                    availableSlots={availableSlots}
+                    isToday={date === currentDate}
+                />
             </fieldset>
             <fieldset>
                 <label htmlFor="guests">Number of guests</label>
@@ -59,3 +62,12 @@ const BookingForm = ({ availableTimes, dispatch }) => {
         </form>
     );
 };
+
+const BookingSlots = ({ id, selectedSlot, onChange, availableSlots, isToday }) =>
+    availableSlots.length
+    ? (
+        <select id={id} value={selectedSlot} onChange={onChange}>
+            {availableSlots.map(time => <option key={time}>{time}</option>)}
+        </select>
+    ) : <p>Sorry, there are no more time slots available {isToday ? 'today' : 'that day'}. Try a different day.</p>
+;

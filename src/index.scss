@@ -54,7 +54,7 @@
 
 /* Typography */
 
-:where(body, a) {
+:where(body, a, button, input, label) {
     color: var(--color-content);
     font-family: var(--font-content);
 }

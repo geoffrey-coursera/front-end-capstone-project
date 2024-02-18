@@ -3,14 +3,13 @@
     max-width: 380px;
     box-sizing: border-box;
     text-align: center;
+    color: var(--color-brand-dark);
     --height: 70px;
     --shadow: 0px 3px 3px color-mix(in srgb, var(--color-content) 25%, transparent);
 }
 
 .custom-select, .custom-select [role=combobox] {
-    font-family: var(--font-content);
     fill: var(--color-brand-dark);
-    color: var(--color-brand-dark);
     font-size: 1.2rem;
     font-weight: bold;
 }
@@ -23,6 +22,7 @@
     
     label {
         cursor: pointer;
+        color: var(--color-brand-dark);
         grid-column: 2;
         display: block;
         width: 100%;
@@ -129,6 +129,10 @@
 
         [role=combobox] .icon * {
             stroke: var(--color-paper);
+        }
+
+        label {
+            color: var(--color-paper);
         }
     }
 }

@@ -10,9 +10,13 @@
     --color-paper: white;
     --color-content: #333333;
     --color-brand-dark: #495E57;
+    --color-brand-medium: #307e64;
+    --color-brand-light: #a9e9d3;
     --color-brand-accent: #F4CE14;
     --color-secondary-light: #EDEFEE;
     --color-secondary-accent: #EE9972;
+    --color-secondary-accent-darker: #ea8556;
+    --color-ternary-accent: #FBDABB;
 
     --color-shade-0: #{mix-brand(95%)};
     --color-shade-1: #{mix-brand(90%)};

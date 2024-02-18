@@ -18,8 +18,8 @@
     grid-template-columns: 1fr auto;
     gap: var(--spacing-m);
     padding-bottom: var(--spacing-m);
-    border-top-right-radius: 16px;
-    border-top-left-radius: 16px;
+    border-top-right-radius: var(--border-radius);
+    border-top-left-radius: var(--border-radius);
     overflow: hidden;
 }
 

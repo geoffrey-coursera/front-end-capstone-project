@@ -14,7 +14,8 @@
     --spacing-l: 50px;
     --spacing-xl: 90px;
 
-    --border-width: 3.5px;
+    --border-width: 4px;
+    --border-radius: 16px;
 
     --span-all: -1/1;
 

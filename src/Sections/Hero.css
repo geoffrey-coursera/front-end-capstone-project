@@ -43,7 +43,7 @@
     object-fit: cover;
     grid-column: mid / end;
     grid-row: var(--span-all);
-    border-radius: 16px;
+    border-radius: var(--border-radius);
 }
 
 #hero h1 {

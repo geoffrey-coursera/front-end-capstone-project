@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('Website has Little lemon logo with alt text', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const logos = screen.getAllByAltText(/Little Lemon Restaurant/i);
+  expect(logos[0]).toBeInTheDocument();
 });

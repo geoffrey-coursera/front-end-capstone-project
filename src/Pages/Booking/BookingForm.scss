@@ -13,5 +13,7 @@
 
     input[type=submit] {
         margin-top: var(--spacing-s);
+        min-width: 100%;
+        white-space: break-spaces;
     }
 }

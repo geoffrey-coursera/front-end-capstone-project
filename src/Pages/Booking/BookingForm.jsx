@@ -46,6 +46,14 @@ const guestsRule = {
     type: 'error'
 };
 
+const submitRule = (ok, loading) => ({
+    label: 'submition failure',
+    predicate: () => ok !== false,
+    message: 'Submission failed. Try again.',
+    isLoading: loading,
+    loadingMessage: 'Sending reservation...'
+});
+
 const useDelay = state => {
     const stateTimer = useRef(null);
     const [delayed, setDelayed] = useState(state);
@@ -72,16 +80,22 @@ const BookingForm = ({
     const { availableSlots, selectedSlot, date: dateTime, loading } = timeSlots;
     const date = getISODate(dateTime);
     const [ok, setOk] = useState(null);
+    const [isSending, setIsSending] = useState(false);
     const [errors, report] = useValidation(['res-date','res-time','guests']);
     
     const delayedLoading = useDelay(loading);
 
     useEffect(() => { getTimeSlots(dateTime) }, [date]);
 
+    const send = state => f => (...xs) => { f(...xs); setIsSending(state); }
+
+    const end = send(false);
+    const start = send(true);
+
     return (
         <form
             id="booking-form"
-            onSubmit={onSubmit(onSuccess, () => setOk(false))}
+            onSubmit={start(onSubmit(end(onSuccess), end(() => setOk(false))))}
         >
             <h1>Reserve a table</h1>
             <Validate
@@ -138,13 +152,14 @@ const BookingForm = ({
                 <Option>Engagement</Option>
                 <Option>Anniversary</Option>
             </Select>
-            <input
-                disabled={!isSubmittable(errors)}
-                className="button-primary"
-                type="submit"
-                value="Make Your reservation"
-            />
-            {(ok === false) && <p>Submission failed. Try again.</p>}
+            <Validate onRender={submitRule(ok, isSending)}>
+                <input
+                    disabled={!isSubmittable(errors)}
+                    className="button-primary"
+                    type="submit"
+                    value="Make Your reservation"
+                />
+            </Validate>
         </form>
     );
 };

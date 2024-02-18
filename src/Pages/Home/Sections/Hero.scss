@@ -1,3 +1,5 @@
+@use 'media-queries' as media;
+
 #hero {
     color: white;
     grid-template-rows: auto auto;
@@ -55,7 +57,7 @@
     font-size: var(--sub-heading);
 }
 
-@media (width < 730px) {
+@include media.small-and-bellow {
     #hero {
         text-align: center;
         color: white;

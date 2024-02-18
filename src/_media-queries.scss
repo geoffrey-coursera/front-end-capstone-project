@@ -1,0 +1,42 @@
+@mixin large {
+    @media (940px <= width) {
+        @content;
+    }
+}
+
+@mixin medium {
+    @media (740px <= width < 940px) {
+        @content;
+    }
+}
+
+@mixin small {
+    @media (560px <= width < 740px) {
+        @content;
+    }
+}
+
+@mixin tiny {
+    @media (width < 560px) {
+        @content;
+    }
+}
+
+@mixin medium-and-above {
+    @media (740px <= width) {
+        @content;
+    }
+}
+
+@mixin medium-and-bellow {
+    @media (width < 940px) {
+        @content;
+    }
+}
+
+
+@mixin small-and-bellow {
+    @media (width < 740px) {
+        @content;
+    }
+}

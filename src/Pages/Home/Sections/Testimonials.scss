@@ -1,3 +1,5 @@
+@use 'media-queries' as media;
+
 #testimonials {
     grid-template-rows: repeat(4, auto);
 }
@@ -34,7 +36,7 @@
     align-items: center;
 }
 
-@media (min-width: 661px) {
+@include media.medium-and-above {
     #testimonials h2::before, #testimonials h2::after {
         content: '';
         width: var(--spacing-l);
@@ -77,8 +79,7 @@
     translate: 0 0.6ex;
 }
 
-@media (max-width: 940px) {
-    #testimonials {
+@include media.medium-and-bellow {    #testimonials {
         column-gap: var(--spacing-l);
     }
 
@@ -93,7 +94,7 @@
     }
 }
 
-@media (max-width: 660px) {
+@include media.small-and-bellow {
     #testimonials article:nth-of-type(n) {
         grid-column: start / end;
         width: 100%;

@@ -1,11 +1,12 @@
 import React from 'react-dom';
+import { Link } from "react-router-dom";
 
 import './Button.css';
 
 export { Button as default };
 
 const Button = ({ href, children }) => (
-    <a className="button-primary" href={href}>
+    <Link className="button-primary" to={href}>
         {children}
-    </a>
+    </Link>
 )

@@ -36,24 +36,24 @@
 
 /* Typography */
 
-body, a {
+:where(body, a) {
     color: var(--color-content);
     font-family: 'Karla', sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
+:where(h1, h2, h3, h4, h5, h6) {
     font-family: 'Markazi Text', serif;
     line-height: 0.8em;
 }
 
-h1, h2 {
+:where(h1, h2) {
     font-size: var(--heading-1);
 }
 
-h3, h4, h5, h6 {
+:where(h3, h4, h5, h6) {
     font-size: var(--heading-2);
 }
 
-p {
+:where(p) {
     line-height: 1.5em;
 }

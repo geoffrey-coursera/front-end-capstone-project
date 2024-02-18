@@ -5,7 +5,7 @@ import GraceHopper from 'assets/testimonials/grace-hopper.jpg'
 import AlonzoChurch from 'assets/testimonials/alonzo-church.jpg'
 import HedyLamarr from 'assets/testimonials/hedy-lamarr.jpg'
 
-import './Testimonials.css';
+import './Testimonials.scss';
 
 export { Testimonials as default };
 

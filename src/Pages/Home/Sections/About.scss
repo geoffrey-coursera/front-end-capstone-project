@@ -1,3 +1,5 @@
+@use 'media-queries' as media;
+
 #about {
     position: relative;
     grid-column: start / end;
@@ -35,7 +37,7 @@
     object-fit: cover;
 }
 
-@media (width > 790px) {
+@include media.medium-and-above {
     #about::after {
         content: '';
         z-index: 1;
@@ -77,7 +79,7 @@
     font-size: var(--sub-heading);
 }
 
-@media (width <= 790px) {
+@include media.small-and-bellow {
     #about {
         grid-template-rows: auto 1fr calc(400px);
         gap: var(--spacing-m);

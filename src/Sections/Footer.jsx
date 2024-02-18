@@ -2,7 +2,7 @@ import React from 'react-dom';
 import Nav from 'Components/Nav';
 import LogoFooter from 'assets/logo-vertical-white.png';
 
-import './Footer.css';
+import './Footer.scss';
 
 export { Footer as default };
 

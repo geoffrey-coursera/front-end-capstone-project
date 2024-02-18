@@ -6,7 +6,7 @@ import Delivery from 'assets/specials/delivery.png';
 import Button from 'Components/Button';
 import Link from 'Components/Link';
 
-import './Specials.css';
+import './Specials.scss';
 
 export { Specials as default };
 

@@ -1,18 +1,18 @@
-import React from 'react-dom';
+import { Link } from "react-router-dom";
 
 export { Nav as default };
 
-const Nav = ({ burger=null }) => (
+const Nav = ({ burger=null, onClick }) => (
     <nav>
-        <ul>{pageTitles.map(NavLink)}</ul>
+        <ul>{pageTitles.map(NavLink(onClick))}</ul>
         {burger}
     </nav>
 );
 
-const NavLink = title => {
+const NavLink = (onClick) => (title) => {
     const slug = Slug(title);
     const url = title === 'Home' ? '/' : `/${slug}`;
-    return <li key={slug}><a href={url}>{title}</a></li>;
+    return <li key={slug}><Link to={url} onClick={onClick}>{title}</Link></li>;
 }
 
 const pageTitles = [

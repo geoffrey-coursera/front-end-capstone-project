@@ -1,16 +1,20 @@
 import React from 'react-dom';
 
-import './Burger.css';
+import './Burger.scss';
 
 export { Burger as default };
 
-const Burger = () => (
-    <div className="burger">
-        <input type="checkbox" role="button" aria-label="navigation menu toggle" className="open" name="" id="" />
+const Burger = ({ open, toggle }) => (
+    <button
+        className="burger"
+        data-open={open}
+        aria-label="navigation menu toggle"
+        onClick={toggle}
+    >
         <div aria-hidden="true">
             <span></span>
             <span></span>
             <span></span>
         </div>  
-    </div>
+    </button>
 );

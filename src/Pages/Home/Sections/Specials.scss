@@ -1,3 +1,5 @@
+@use 'media-queries' as media;
+
 #specials {
     grid-template-rows: auto 200px repeat(3, auto);
 }
@@ -69,21 +71,16 @@
     justify-self: start;
 }
 
-@media (width > 940px) {
+@include media.large {
     #specials article .wrapper {
         grid-row: 2/-1;
+        grid-column: var(--span-all);
         grid-template-columns: subgrid;
         grid-template-rows: subgrid;
     }
 }
 
-@media (width > 940px) or (width < 690px) {
-    #specials article .wrapper {
-        grid-column: var(--span-all);
-    }
-}
-
-@media (width < 940px) {
+@include media.medium-and-bellow {
     #specials {
         grid-template-rows: auto;
     }
@@ -110,8 +107,7 @@
     }
 }
 
-@media (690px <= width < 940px) {
-
+@include media.medium {
     #specials article:nth-of-type(n) {
         grid-row: auto;
         grid-template-rows: auto;
@@ -136,8 +132,12 @@
     }
 }
 
-@media (width < 690px) {
+@include media.small-and-bellow {
     #specials article {
         max-width: 400px;
+    }
+    
+    #specials article .wrapper {
+        grid-column: var(--span-all);
     }
 }

@@ -1,17 +1,20 @@
 import HeaderNav from 'Sections/HeaderNav';
 import Footer from 'Sections/Footer';
-import HomePage from 'Pages/HomePage';
 
-import './App.css';
+import Home from 'Pages/Home';
 
-function App() {
-    return <>
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import './App.scss';
+
+const App = () => (
+    <BrowserRouter>
         <HeaderNav/>
-        <main>
-            <HomePage />
-        </main>
+        <Routes>
+            <Route path="/" element={<Home />} />
+        </Routes>
         <Footer/>
-    </>;
-}
+    </BrowserRouter>
+);
 
 export default App;

@@ -1,3 +1,5 @@
+@use 'media-queries' as media;
+
 #root {
     display: grid;
     column-gap: var(--spacing-m);
@@ -14,7 +16,7 @@
     --col-max-w: 54px;
 }
 
-@media (width < 940px) {
+@include media.medium-and-bellow {
     #root {
         grid-template-columns:
             1fr
@@ -29,36 +31,10 @@
     }
 }
 
-:where(main > section, footer) {
-    display: grid;
-    grid-column: var(--span-all);
-    grid-template-columns: subgrid;
-}
-
-:where(main > section) > * {
-    grid-column: start / end;
-}
-
 #header-nav {
     grid-column: start / end;
 }
 
 main {
     display: contents;
-}
-
-#hero {
-    margin-bottom: 65px
-}
-
-#specials {
-    margin-bottom: 95px
-}
-
-#testimonials {
-    margin-bottom: 125px;
-}
-
-#about {
-    margin-bottom: 95px;
 }

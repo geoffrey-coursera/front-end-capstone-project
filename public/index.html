@@ -30,9 +30,31 @@
     <meta property="og:image" content="%PUBLIC_URL%/logo.png" />
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;700&family=Markazi+Text:wght@500&display=swap" rel="stylesheet"> 
+    <style>
+        @font-face {
+            font-display: optional;
+            font-family: 'Karla';
+            font-style: normal;
+            font-weight: 400;
+            src: url(%PUBLIC_URL%/fonts/Karla.woff2) format('woff2');
+        }
+
+        @font-face {
+            font-display: fallback;
+            font-family: 'Karla';
+            font-style: normal;
+            font-weight: 700;
+            src: url(%PUBLIC_URL%/fonts/Karla.woff2) format('woff2');
+        }
+
+        @font-face {
+            font-display: fallback;
+            font-family: 'Markazi Text';
+            font-style: normal;
+            font-weight: 500;
+            src: url(%PUBLIC_URL%/fonts/MarkaziText.woff2) format('woff2');
+        }
+    </style>
   </head>
   <body>
       <noscript>You need to enable JavaScript to run this app.</noscript>

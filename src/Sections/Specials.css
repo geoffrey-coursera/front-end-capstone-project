@@ -3,9 +3,11 @@
 }
 
 #specials > .wrapper {
+    grid-column: start / end;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: var(--spacing-m) var(--spacing-l);
     margin-bottom: var(--spacing-l);
 }
 
@@ -14,21 +16,21 @@
     grid-row: 2 / -1;
     background: var(--color-secondary-light);
     display: grid;
+    column-gap: var(--spacing-m);
     grid-template-rows: subgrid;
     grid-template-columns: 1fr auto;
-    border-top-right-radius: var(--border-radius);
-    border-top-left-radius: var(--border-radius);
+    border-radius: 
+        var(--border-radius)
+        var(--border-radius)
+        0 0;
     overflow: hidden;
 }
 
 #specials article .wrapper {
     display: grid;
-    grid-row: 2/-1;
-    grid-column: 1/-1;
-    grid-template-columns: subgrid;
-    grid-template-rows: subgrid;
     padding: var(--spacing-m);
     row-gap: var(--spacing-m);
+    grid-template-columns: 1fr auto;
 }
 
 #specials article h2 {
@@ -61,4 +63,68 @@
 
 #specials .order-link {
     justify-self: start;
+}
+
+@media (width > 940px) {
+    #specials article .wrapper {
+        grid-row: 2/-1;
+        grid-template-columns: subgrid;
+        grid-template-rows: subgrid;
+    }
+}
+
+@media (width > 940px) or (width < 690px) {
+    #specials article .wrapper {
+        grid-column: var(--span-all);
+    }
+}
+
+@media (width < 940px) {
+    #specials {
+        grid-template-rows: auto;
+    }
+
+    #specials article {
+        margin-bottom: var(--spacing-l);
+    }
+
+    #specials article:nth-of-type(n) {
+        grid-column: 3 / span 10;
+        grid-row: auto;
+        grid-template-rows: auto;
+    }
+
+    #specials > .wrapper {
+        flex-direction: column;
+    }
+
+    #specials .price {
+        align-self: start;
+    }
+}
+
+@media (690px < width < 940px) {
+
+    #specials article:nth-of-type(n) {
+        grid-row: auto;
+        grid-template-rows: auto;
+    }
+
+    #specials article {
+        grid-template-columns: 250px auto;
+        column-gap: 0;
+        border-radius: 
+            var(--border-radius)
+            0 0
+            var(--border-radius);
+    }
+
+    #specials article .wrapper {
+        column-gap: var(--spacing-m);
+    }
+
+    #specials img {
+        grid-column: 1 / 2;
+        grid-row: 1/ span 4;
+    }
 }

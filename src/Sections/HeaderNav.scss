@@ -16,7 +16,7 @@
     ul {
         display: flex;
         list-style: none;
-        justify-content: end;
+        justify-content: flex-end;
         width: 100%;
         gap: var(--spacing-m);
     }

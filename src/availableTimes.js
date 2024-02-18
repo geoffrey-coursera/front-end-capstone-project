@@ -23,6 +23,11 @@ const memoize = (f, transform = x => x) => {
 /* fake data */
 const openingHour = 12;
 const closingHour = 22;
+const serverLag = 500;
+
+const delay = f => (...xs) => new Promise((resolve, reject) => {
+    setTimeout(() => resolve(f(...xs)), serverLag);
+});
 
 /** Fake random predicate always accepting the last available time slot */
 const isValidTime = (_, i, a) => Math.random() > 0.5 || i === a.length - 1;
@@ -46,12 +51,10 @@ const getTimeSlots = (opening, closing) => date => {
 };
 
 /** API returning consistent random time slots until closingHour. */
-const fetchTimes = memoize(date => {
-    const times = getTimeSlots(openingHour, closingHour)(date);
-    return new Promise((resolve, reject) => {
-        setTimeout(() => resolve(times), 500);
-    });
-}, getISODate);
+const fetchTimes = memoize(
+    delay(getTimeSlots(openingHour, closingHour)),
+    getISODate
+);
 
 /** Resolve to `true` 2/3 of the time */
-const submitReservation = () => Promise.resolve(Math.random() < 2/3);
+const submitReservation = delay(() => Math.random() < 2/3);

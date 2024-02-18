@@ -39,7 +39,7 @@ const App = () => {
     const currentDate = getISODate(new Date());
 
     const [date, setDate] = useState(currentDate);
-    const [guests, setGuests] = useState(2);
+    const [guests, setGuests] = useState(0);
     const [timeSlots, dispatch] = useReducer(updateTimes, {
         availableSlots: initialTimes,
         selectedSlot: ''

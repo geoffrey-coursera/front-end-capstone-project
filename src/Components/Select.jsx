@@ -1,12 +1,12 @@
 import { useState, Children, cloneElement, useEffect, useRef } from 'react';
-import { addClassName } from 'lib/jsx';
+import { addClassName, mergeClassNames } from 'lib/jsx';
 
 import './Select.scss';
 
 export { Select as default, Option };
 
 const Select = (props) => {
-    const { id, icon, title, name, children, defaultOption } = props;
+    const { id, icon, title, name, children, defaultOption, disabled, className } = props;
 
     const isControlled = props.value !== undefined;
     const hasDefaultValue = props.defaultValue !== undefined;
@@ -72,10 +72,17 @@ const Select = (props) => {
         }
     }, []);
 
+    const combinedClassName = mergeClassNames(
+        className,
+        'custom-select',
+        disabled ? 'disabled' : ''
+    );
+    
     return (
-        <div ref={ref} className="custom-select">
+        <div ref={ref} className={combinedClassName}>
             <input type="hidden" name={name} value={value} />
             <button
+                disabled={disabled}
                 role="combobox"
                 aria-labelledby={id + '-label'}
                 aria-haspopup="listbox"

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Select, { Option } from 'Components/Select';
 import Range from 'Components/Range';
 import Label from 'Components/Label';
+import Validate from 'Components/Validate';
 
 import { ReactComponent as CalendarIcon } from 'assets/booking/calendar.svg';
 import { ReactComponent as OccasionIcon } from 'assets/booking/occasion.svg';
@@ -12,6 +13,8 @@ import { ReactComponent as GuestsIcon } from 'assets/booking/guests.svg';
 import './BookingForm.scss';
 
 export { BookingForm as default };
+
+const apply = setter => e => setter(e.target.value);
 
 const BookingForm = ({
     timeSlots, dispatch, fetchTimes,
@@ -23,8 +26,6 @@ const BookingForm = ({
 
     const { availableSlots, selectedSlot } = timeSlots;
     const [ok, setOk] = useState(null);
-
-    const update = setter => e => setter(e.target.value);
 
     useEffect(() => {
         fetchTimes(new Date(date)).then(payload => dispatch({ type: 'times_fetched', payload }))
@@ -45,12 +46,12 @@ const BookingForm = ({
                     type="date"
                     value={date}
                     min={currentDate}
-                    onChange={update(setDate)}
+                    onChange={apply(setDate)}
                 />
             </fieldset>
             <BookingSlots
                 id="res-time"
-                onChange={update(payload => dispatch({ type: 'time_selected', payload }))}
+                onChange={apply(payload => dispatch({ type: 'time_selected', payload }))}
                 selectedSlot={selectedSlot}
                 availableSlots={availableSlots}
                 isToday={date === currentDate}
@@ -59,15 +60,19 @@ const BookingForm = ({
                 because I want to make sure the user selects a number of guests
                 and does not submit `1` by mistake, hence the `minValid` attr.
             */}
-            <Range
-                type="range"
-                renderIcon={(className) => <GuestsIcon {...{className}} />}
-                title="Number of guests"
-                id="guests"
-                value={guests}
-                min={0} minValid={1} max={10}
-                onChange={update(setGuests)}
-            />
+            <Validate onChange={apply(x => Number(x) ? [] : [
+                'You need to specify a number of guests'
+            ])}>
+                <Range
+                    type="range"
+                    renderIcon={(className) => <GuestsIcon {...{className}} />}
+                    title="Number of guests"
+                    id="guests"
+                    value={guests}
+                    min={0} minValid={1} max={10}
+                    onChange={apply(setGuests)}
+                />
+            </Validate>
             <Select
                 icon={<OccasionIcon />}
                 id="occasion"
@@ -90,10 +95,12 @@ const BookingForm = ({
     );
 };
 
-const BookingSlots = ({ id, selectedSlot, onChange, availableSlots, isToday }) =>
-    availableSlots.length
-    ? (
+const BookingSlots = ({ id, selectedSlot, onChange, availableSlots, isToday }) => (
+    <Validate onRender={() => availableSlots.length ? [] : [
+        `Sorry, there are no more time slots available ${isToday ? 'today' : 'that day'}. Try a different day.`
+    ]}>
         <Select
+            disabled={!availableSlots.length}
             icon={<TimeIcon />}
             id={id}
             name={id}
@@ -103,5 +110,5 @@ const BookingSlots = ({ id, selectedSlot, onChange, availableSlots, isToday }) =
         >
             {availableSlots.map(time => <Option key={time}>{time}</Option>)}
         </Select>
-    ) : <p>Sorry, there are no more time slots available {isToday ? 'today' : 'that day'}. Try a different day.</p>
-;
+    </Validate>
+);

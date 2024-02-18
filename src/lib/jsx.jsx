@@ -1,6 +1,6 @@
 import { cloneElement } from 'react';
 
-export { addClassName };
+export { addClassName, mergeClassNames, wrapWith };
 
 const mergeClassNames = (a, ...rest) => rest.reduce(merge2ClassNames, a);
 
@@ -13,3 +13,5 @@ const merge2ClassNames = (a, b) => {
 const addClassName = (element, className) => cloneElement(element, {
     className: mergeClassNames(element.props.className, className)
 });
+
+const wrapWith =  Component => children => <Component>{children}</Component>;

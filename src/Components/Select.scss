@@ -13,6 +13,22 @@
     font-weight: bold;
 }
 
+.custom-select.disabled {
+    pointer-events: none;
+
+    label {
+        color: var(--color-shade-4);
+    }
+
+    .icon * {
+        stroke: var(--color-shade-4);
+    }
+
+    .arrow {
+        fill: var(--color-shade-4);
+    }
+}
+
 
 .custom-select {
     * {

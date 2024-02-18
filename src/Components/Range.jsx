@@ -1,11 +1,21 @@
 import { useState } from 'react';
+import { mergeClassNames } from 'lib/jsx';
 
 import './Range.scss';
 
 export { Range as default };
 
-
-const Range = ({ defaultValue, renderIcon, title, id, min, max, minValid=min, ...props }) => {
+const Range = ({
+    className,
+    defaultValue,
+    renderIcon,
+    title,
+    id,
+    min,
+    max,
+    minValid=min,
+    ...props
+}) => {
     const isControlled = props.value !== undefined;
     const hasDefaultValue = defaultValue !== undefined;
     
@@ -25,7 +35,10 @@ const Range = ({ defaultValue, renderIcon, title, id, min, max, minValid=min, ..
     }
 
     return (
-        <div className="custom-range" style={{ '--progress': progress }}>
+        <div
+            className={mergeClassNames(className, "custom-range")}
+            style={{ '--progress': progress }}
+        >
             <div>
                 {Boolean(renderIcon) && renderIcon('icon')}
                 <label htmlFor={id}>{title}</label>

@@ -1,8 +1,8 @@
 /* public */
-export { fetchAPI, submitAPI, getISODate };
+export { fetchTimes, submitReservation, getISODate };
 
 /* testing */
-export { fromOpeningHours, fromDate };
+export { enumerateTimeSlots, getTimeSlots };
 
 /** Cache the output of a function based on its input.
  * The input can be transformed to create collisions
@@ -31,28 +31,27 @@ const isValidTime = (_, i, a) => Math.random() > 0.5 || i === a.length - 1;
 const getISODate = (date) => date.toISOString().slice(0, 10);
 
 /** List every possible time slot from `start` and `end` opening hours */
-const fromOpeningHours = end => start => {
+const enumerateTimeSlots = (opening, closing) => {
     return Array.from(
-        {length: end - start},
-        (_, i) => String(start + i + 1).padStart(2, '0') + ':00'
+        { length: closing - opening },
+        (_, i) => String(opening + i + 1).padStart(2, '0') + ':00'
     );
 };
 
-/** API returning consistent random time slots. */
-const fetchAPI = (date, sync=false) => {
-    const times = getTimeSlots(date);
-    return sync ? times : Promise.resolve(times);
+/** Return random time slots until `end` */
+const getTimeSlots = (opening, closing) => date => {
+    const start = date.getHours();
+    const times = enumerateTimeSlots(Math.max(opening, start), closing);
+    return times.filter(isValidTime);
 };
 
-/** Return consistent random time slots until `end` */
-const fromDate = end => memoize(date => {
-    const start = date.getHours();
-    const times = fromOpeningHours(end)(Math.max(openingHour, start));
-    return times.filter(isValidTime);
+/** API returning consistent random time slots until closingHour. */
+const fetchTimes = memoize(date => {
+    const times = getTimeSlots(openingHour, closingHour)(date);
+    return new Promise((resolve, reject) => {
+        setTimeout(() => resolve(times), 500);
+    });
 }, getISODate);
 
-/** Return consistent random time slots */
-const getTimeSlots = fromDate(closingHour)
-
 /** Resolve to `true` 2/3 of the time */
-const submitAPI = () => Promise.resolve(Math.random() < 2/3);
+const submitReservation = () => Promise.resolve(Math.random() < 2/3);

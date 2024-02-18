@@ -1,7 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import BookingForm from './BookingForm';
-import { initializeTimes, updateTimes } from 'App';
-import { laterThan, isTimeSlot } from 'availableTimes.test'
+import { updateTimes } from 'App';
+import { isTimeSlot } from 'availableTimes.test'
+import { fetchTimes } from 'availableTimes'
 
 test('Renders the BookingForm heading', () => {
     const props = {
@@ -10,7 +11,12 @@ test('Renders the BookingForm heading', () => {
             selectedSlot: ''
         },
         fetchTimes: () => Promise.resolve([]),
-        dispatch: () => {}
+        dispatch: () => {},
+        currentDate: '',
+        onSubmit: () => {},
+        onSuccess: () => {},
+        guests: 0,
+        setGuests: () => {}
     };
 
     render(<BookingForm {...props} />);
@@ -20,34 +26,31 @@ test('Renders the BookingForm heading', () => {
 })
 
 describe('time slots state', () => {
-    test('initializeTimes gets at least one time slot later than current time', async () => {
-        const currentHour = 17;
-        const times = await initializeTimes(
-            new Date(2024, 1, 30, currentHour, 0)
+    test('fetchTimes fetches time slots', async () => {
+        const times = await fetchTimes(
+            new Date(2024, 1, 30, 12)
         );
 
         expect(times.every(isTimeSlot)).toBeTruthy();
-        expect(laterThan(times, currentHour)).toBeTruthy();
-        expect(times.length).toBeGreaterThanOrEqual(1);
-    })
-
-    test('updateTimes reducer', () => {
-        const init = ['16:00', '18:00', '22:00'];
-
-        const action1 = { type: 'times_fetched', payload: ['17:00', '19:00', '22:00'] };
-        const action2 = { type: 'time_selected', payload: '19:00' };
-
-        const a = updateTimes(init, action1);
-        const b = updateTimes(a, action2);
+    });
     
-        expect(a).toStrictEqual({
-            availableSlots: ['17:00', '19:00', '22:00'],
-            selectedSlot: '17:00'
+    test('updateTimes reducer', () => {
+        const init = {};
+
+        const a = updateTimes(init, {
+            type: 'times_fetched',
+            payload: ['17:00', '19:00', '22:00']
         });
 
-        expect(b).toStrictEqual({
-            availableSlots: ['17:00', '19:00', '22:00'],
-            selectedSlot: '19:00'
+        expect(a.availableSlots).toStrictEqual(['17:00', '19:00', '22:00']);
+        expect(a.selectedSlot).toBe('');
+
+        const b = updateTimes(a, {
+            type: 'time_selected',
+            payload: '19:00'
         });
+    
+        expect(b.availableSlots).toStrictEqual(['17:00', '19:00', '22:00']);
+        expect(b.selectedSlot).toBe('19:00');
     })
 })

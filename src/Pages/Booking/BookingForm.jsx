@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Select, { Option } from 'Components/Select';
 import Range from 'Components/Range';
@@ -20,23 +20,28 @@ const BookingForm = ({
     timeSlots, dispatch, fetchTimes,
     date, currentDate, setDate,
     guests, setGuests,
-    submitForm
+    onSubmit
 }) => {
     const goTo = useNavigate();
+    const mounted = useRef(false);
 
     const { availableSlots, selectedSlot } = timeSlots;
     const [ok, setOk] = useState(null);
 
     useEffect(() => {
-        fetchTimes(new Date(date)).then(payload => dispatch({ type: 'times_fetched', payload }))
+        if(mounted.current) {
+            fetchTimes(new Date(date)).then(
+                payload => dispatch({ type: 'times_fetched', payload })
+            )
+        } else {
+            mounted.current = true;
+        }
     }, [date]);
-
-    useEffect(() => { ok && goTo('/confirmed-booking'); }, [ok]);
 
     return (
         <form
             id="booking-form"
-            onSubmit={submitForm(() => setOk(true), () => setOk(false))}
+            onSubmit={onSubmit(() => goTo('/confirmed-booking'), () => setOk(false))}
         >
             <h1>Reserve a table</h1>
             <fieldset>

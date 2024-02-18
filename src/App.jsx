@@ -1,5 +1,5 @@
-import { useReducer, useState } from 'react';
-import { getISODate, submitAPI } from 'availableTimes';
+import { useEffect, useReducer, useState } from 'react';
+import { useDependencies } from './dependencies';
 
 import HeaderNav from 'Sections/HeaderNav';
 import Footer from 'Sections/Footer';
@@ -13,11 +13,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import './App.scss';
 
-import { fetchAPI } from './availableTimes';
-
-export { initializeTimes, updateTimes };
-
-const initializeTimes = fetchAPI;
+export { App as default, updateTimes };
 
 const updateTimes = (state, { type, payload }) => {
     switch(type) {
@@ -27,29 +23,33 @@ const updateTimes = (state, { type, payload }) => {
     }
 };
 
-// Jest does not support top-level await with this setup so I'm passing this 'sync' flag
-const initialTimes = initializeTimes(new Date(), true);
-
-const submitForm = (onSuccess, onError) => e => {
-    submitAPI(e.target).then(ok => ok ? onSuccess() : onError());
+const submitForm = api => (onSuccess, onError) => e => {
+    api(e.target).then(ok => ok ? onSuccess() : onError());
     e.preventDefault();
 }
 
 const App = () => {
-    const currentDate = getISODate(new Date());
+    const { dateNow, availableTimes: {
+        getISODate,
+        submitReservation,
+        fetchTimes
+    }} = useDependencies();
+    
+    const now = dateNow();
+    const currentDate = getISODate(now);
 
     const [date, setDate] = useState(currentDate);
     const [guests, setGuests] = useState(0);
     const [timeSlots, dispatch] = useReducer(updateTimes, {
-        availableSlots: initialTimes,
+        availableSlots: [],
         selectedSlot: ''
     });
 
     const bookingFormProps = {
-        timeSlots, dispatch, fetchTimes: fetchAPI,
+        timeSlots, dispatch, fetchTimes,
         date, currentDate, setDate,
         guests, setGuests,
-        submitForm
+        onSubmit: submitForm(submitReservation)
     };
 
     const confirmedBookingProps = {
@@ -57,6 +57,12 @@ const App = () => {
         date, currentDate,
         guests
     };
+
+    useEffect(() => {
+        fetchTimes(now).then(payload => {
+            dispatch({ type: 'times_fetched', payload })
+        });
+    }, []);
 
     return (
         <BrowserRouter>
@@ -71,5 +77,3 @@ const App = () => {
         </BrowserRouter>
     );
 }
-
-export default App;
